@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+	<!-- d3 -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+
+	<!-- Bootstrap -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<title>Document</title>
+</head>
+<body>
+	<div class="row">
+		<div id ="leftSide" class="col-md-1"></div>
+
+		<div id="leftMiddle" class="col-md-5"></div>
+		<div id="rightMiddle" class="col-md-5"></div>
+
+		<div id ="rightSide" class="col-md-1"></div>
+	</div>
+	
+	<script>
+
+		var sideWidth = $('#leftSide').width();
+		var sideHeight = $( window ).height();
+
+		var arrowSide = 100, arrowMargin = 20;
+		
+		var leftCanvas = d3.select('#leftSide')
+			.append('svg')
+				.attr('width', sideWidth)
+				.attr('height', sideHeight)
+			.append('rect')
+				.attr('width', arrowSide )
+				.attr('height', arrowSide )
+				.attr('x', arrowMargin )
+				.attr('y', sideHeight/2 - arrowSide/2 )
+				.attr('fill', '#ff0000')
+				.attr('id', 'leftArrow');
+
+		var rightCanvas = d3.select('#rightSide')
+			.append('svg')
+				.attr('width', sideWidth)
+				.attr('height', sideHeight)
+			.append('rect')
+				.attr('width', arrowSide )
+				.attr('height', arrowSide )
+				.attr('x', sideWidth - arrowSide - arrowMargin)
+				.attr('y', sideHeight/2 - arrowSide/2 )
+				.attr('fill', '#00ff00')
+				.attr('id', 'rightArrow');
+
+		$('#leftArrow').click( () =>{
+			if(currentPage > 1)
+				fillContent(--currentPage);
+		});
+
+		$('#rightArrow').click( () =>{
+			if(currentPage < 3)
+				fillContent(++currentPage);
+		});
+
+		var currentPage = 2;
+		$('#leftArrow').trigger('click');
+
+		function fillContent(chapter){
+			$.get( 'OCA chapter' + ( chapter * 2 - 1 ) + '.md.html', function( data ) {
+				$('#leftMiddle').html(data);
+			});
+			$.get( 'OCA chapter' + ( chapter * 2 ) + '.md.html', function( data ) {
+				$('#rightMiddle').html(data);
+			});
+		}
+
+	</script>
+</body>
+</html>
