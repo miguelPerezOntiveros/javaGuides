@@ -29,23 +29,23 @@
 - If a reference variable is declared as an interface type, it can reference any object of any class that implements the interface.
 - The compiler only knows about the declared reference type, but the Java Virtual Machine (JVM) at runtime knows what the object really is, so even if the subclass overrides an inherited method and it is called via a superclass reference, the JVM will invoke the subclass version. This only applies to instance methods, not static methods.
 - Works with interfaces as well as superclasses.
-###
-### Casting
+
+###### Casting
 - You can upcasting implicitly because you are restricting the number of methods you can invoke.
 
 ### Overriding and Overloading
-###
-### Overriding
+
+###### Overriding
 - If the inherited method is marked _final_, you can´t override it.
 - You cannot override a method marked _final_ or _static_.
 - If a method can't be inherited, you cannot override it (see Chapter 1). 
 - Invoking a Superclass Version of an Overridden Method: _super.bar()_.
 - If you call via a reference variable a method that declares a checked exception, then even if it is overriden and the overriden method does not declare exceptions, the compiler only knows about the original method with the exception.
-###
-### Overloading.
+
+###### Overloading.
 - A method can be overloaded in the same class or in a subclass.
-###
-### Differences
+
+###### Differences
 
 |             | Overloaded Method                                                                                                                                                                                                                            | Overriden Method                                                                                                  |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
