@@ -1,9 +1,12 @@
 # Chapter 5: Strings, Arrays and ArrayLists
+
 ### Contents
 * Strings
 * Arrays
 * ArrayLists
+
 ### Strings
+
 ###### The _String_ Class
 - Once a String object is created, it can never be changed, it is inmutable, but its reference variable is not.
 - In Java, each character in a string is a 16-bit Unicode character.
@@ -36,6 +39,7 @@
     - public String toString() - Returns the value of a String.
     - public String toUpperCase() - Retusn a string, with ñowercase characters converted to uppercase.
     - public String trim() - Removes whitespace from both ends of a String.
+
 ###### The _StringBuilder_ Class
 - Objects of type StringBuilder can be modified over and over again without leaving behind a great effluence of discarded String objects.
 - The _StringBuffer_ class has exactly the same API, except StringBuilder is not thread-safe. StringBuilder will run faster.
@@ -52,6 +56,7 @@
     - public StringBuilder insert(int offset, String s)
     - public StringBuilder reverse()
     - public String toString()
+
 ### Arrays
 - Arrays can hold either primitives or object references.
 - There is no such thing as a primitive array, but you can make an array of primitives.
@@ -112,6 +117,7 @@
         books[0] = aNumber;     // NO, expecting an int array not an int
         books[0] = numbers;     // OK, numbers is an int array
     ```
+
 ### ArrayLists
 - The Java API provides classes that support common data structures such as _Lists_, _Sets_, _Maps_, and _Queues_. The classes that support these common data structures are a part of what is known as "The Collection API".
 - They are easier to use than arrays in scenarios where you need to be able to increase or decrease the number of things in you list, and where the order is important and varies.

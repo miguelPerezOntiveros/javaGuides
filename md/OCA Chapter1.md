@@ -1,4 +1,5 @@
 # Chapter 1: Declarations and Access Control
+
 ### Contents
 * Identifiers, Keywords, Source File Rules and Conventions
 * javac and java
@@ -9,23 +10,29 @@
 * Constructors
 * Range of Numeric Primitives
 * Enumerated types
+
 ### Identifiers, Keywords, Source File Rules and Conventions
+
 ###### Legal Identifiers
 - Must start with a letter, currency character or connecting character. May contain numbers after that.
 - Length is not limited.
 - Must not be a Java keyword.
 - They are case-sensitive.
+
 ###### Keywords (50 in total)
 - abstract, boolean, break, byte, case, catch, char, class, const, continue, default, do, double, else, extends, final, finally, float, for, goto, if, implements, import, instanceof, int, interface, long, native, new, package, private, protected, public, return, short, static, strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while, assert, enum.
+
 ###### Source File Declaration Rules
 - The number of public classes in a source code file can be either 1 or 0. If 1, its name and the file name must match.
 - The package line goes first if it exists, then imports if they exist. Import and package statements affect the entire file.
+
 ###### Conventions
 - Classes and interfaces: CamelCase.
 - Interfaces: should be adjectives: _Runnable_ and _Serializable_.
 - Variables and methods: should be CamelCase but with a lowercase first character. 
 - Methods: should be verb-noun pairs: _getBalance_.
 - Constants: should be uppercase with underscores as separators: _MIN_HEIGHT_.
+
 ### javac and java
 - Compile: _javac_ [options] [source files]
 - Run: _java_ [options] class [args]
@@ -33,6 +40,7 @@
     javac -cp ./:myJar.jar MyClass.java
     java Main arg1
     ```
+
 ### The Special main()
 - The following are all legal declarations for the "special" _main()_:
     ``` java
@@ -40,6 +48,7 @@
         public static void main(String... x)            // varargs
         static public void main(String bang_a_gong[])
 - _main()_ can be overloaded.
+
 ### Import Statements
 - They help you type less:
 -   ``` java
@@ -67,7 +76,9 @@
         ...
         double r = cos(PI * theta);
     ```
+
 ### Modifiers
+
 ###### Access modifiers for classes and members
 - Cannot be applied to local variables, only _final_ can.
 - _this._ always refers to the currently executing object.
@@ -80,6 +91,7 @@
 | From a subclass in the same package            | Yes    | Yes                      | Yes     | No      |
 | From a subclass outside the same package       | Yes    | Yes, through inheritance | No      | No      |
 | From any nonsubclass class outside the package | Yes    | No                       | No      | No      |
+
 
 ###### Nonaccess modifiers (including strictfp, final, and abstract)
 - _final_ on a(n)...
@@ -95,11 +107,13 @@
 - _transient_ (only for instance variables) tells the JVM to skip (ignore) this variable when you attempt to serialize the object containing it.
 - _volatile_ (only for instance variables) tells the JVM that a thread accessing the variable must always reconcile its own private copy of the variable with the master copy in memory.
 - _static_ is used to create variables and methods that will exist independently of any instances created for the class. Can also be applied to nested classes within another class, but not within a method, and to Initialization blocks.
+
 ###### Comparison of usable modifiers on variables, methods and classes
 - Local Variables can be modified with: _final_.
 - Variables (non-local) can be modified with: _public_, _protected_, _private_, _final_, _static_, _transient_ or _volatile_.
 - Methods can be modified with: _public_, _protected_, _private_, _final_, _static_, _abstract_, _strictfp_, _synchronized_, or _native_.
 - Classes can be modified with: _public_, _protected_, _private_, _final_, _abstract_ or _strictfp_ (can be _static_ in nested classes).
+
 ### Interfaces
 - Contracts for what a class can do.
 - All interface methods are implicitly _public_ and _abstract_. Because they are _abstract_, they cannot be _final_, _strictfp_, or _native_. They can´t be _static_ either.
@@ -109,10 +123,12 @@
 - They must be declared with the keyword _interface_.
 - Interface types can be used polymorphically (more on Chapter 2).
 - An abstract implementing class does not have to implement the interface methods (but the first concrete subclass must).
+
 ### Constructors
 - Can't have a return type.
 - Must have the same name as the class.
 - Can't be _static_ (they are associated with object instantiation), _final_ or _abstract_ (they can't be overridden)
+
 ### Range of Numeric Primitives
 -  primitive types with their sizes and ranges.
 
@@ -124,6 +140,7 @@
 | long   | 64   | 8     | -2 x 10^63    | 2 x 10^63 - 1 |
 | float  | 32   | 4     | n/a           | n/a           |
 | double | 64   | 8     | n/a           | n/a           |
+
 
 ### Enumerated Types
 - ``` java

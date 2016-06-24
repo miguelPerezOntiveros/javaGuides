@@ -1,12 +1,16 @@
 # Chapter 6: Flow Control and Exceptions
+
 ### Contents
 * Decision statements (_if_, _else_ and _switch_)
 * Loops (_for_, _do_ and _while_)
 * Exceptions
+
 ### Decision statements (_if_, _else_ and _switch_)
+
 ###### _if_ and _else_
 - 1 y 0 are not boolean expressions in Java. 
 - _else_ and _if_ can be combined to create _else-if_ constructs.
+
 
 ###### _switch_
 - A _switch_'s expression must evaluate to _enum_, _string_ or values that can be implicitly cast to _int_ (not _long_, _float_ or _double_).
@@ -17,7 +21,9 @@
 - Execution _fall-through_: When no break is present, code execution continues to the next case.
 - The _default_ case will run if non of the cases matched.
 - A switch's cases must be compile-time constants or enum values (_final String_ is ok).
+
 ### Loops (_for_, _do_ and _while_)
+
 ###### _for_ loop
 - The basic for loop:
     ```java
@@ -31,6 +37,7 @@
 - None of the 3 parts are required. In case of not having any part presen, the _for_ will act like an endless loop.
 - If only the _Condition_ expression is provided, the _for_ act like a _while_ loop.
 - You can put in virtually any arbitrary code statements that you want to happen with each iteration of the loop as the _Iteration_ expression.
+
 ###### Enhanced _for_ loop
 - Similar to a _foreach_ in other languages.
     ```java
@@ -38,6 +45,7 @@
         /* Loop body */ 
     }
     ```
+
 ###### _while_ loop
 - Any variables used in the expression of a while loop must be declared before the expression is evaluated. Example of a _while_ loop:
     ```java
@@ -45,6 +53,7 @@
         /* Loop body */ 
     }
     ```
+
 ###### _do_ loop
 - The code in a do loop is guaranteed to execute at least once.  Example of a _do_ loop:
     ```java
@@ -52,6 +61,7 @@
         /* Loop body */ 
     } while( /*Expression*/ 1 == 1);
     ```
+
 ###### _break_ and _continue_
 - _break_ stops the entire loop.
 - _continue_ stops the current iteration.
@@ -65,6 +75,7 @@
     ```java
     break myFooLabel;
     ```
+
 ### Exceptions
 - If there is a return statement in the _try_ block, the _finally_ block executes before it executes.
 - If a System.exit() is present, the _finally_ block will not execute. 
@@ -78,6 +89,7 @@
 - You sholdn´t handle an _error_, because you can rarely recover from one.
 - _Error_ and _Exception_ are inmediate children of _Throwable_, who is an inmediate child of _Object_.
 - An overriding method cannot throw checked exceptions that are broader than those thrown by the overridden method (Apart from _RuntimeException_). 
+
 ###### Common Exceptions
 - 10 exceptions and errors to cover OCA Objective 8.5.
 

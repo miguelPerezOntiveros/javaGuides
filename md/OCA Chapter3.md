@@ -1,4 +1,5 @@
 # Chapter 3: Assignments
+
 ### Contents
 * Stack and Heap
 * Literals
@@ -8,10 +9,12 @@
 * Variable Initialization
 * Passing varibles into Methods
 * Garbage Collection
+
 ### Stack and Heap
 - The pieces of a Java program (methods, variables and objects) live in one of two places in memory:
     - The stack: for functions and local variables.
     - The heap: for instance variables and objects.
+
 ### Literals
 - Integers
     - base 2: They start with _0B_ or _0b_.
@@ -43,6 +46,7 @@
 - String literals
     - Strings are not primitives, but can be represented as literals.
     - The only other nonprimitive type that has a literal representation is an array, which we'll look at later in the chapter.
+
 ### Assignment Operators
 - Variables are just bit holders, with a designated type.
 - For primitives, the bits represent a numeric value. A byte with a value of 6, for example, means that the bit pattern in the variable (the byte holder) is 00000110, representing the 8 bits.
@@ -60,6 +64,7 @@
     ``` java
     int j, k=1, l, m=3;
     ```
+
 ### Primitive Casting
 - Typically, an implicit cast (one you don´t have to write) happens when you're doing a widening conversion: putting a smaller thing into a bigger container (say, a _byte_ in an _int_).
 - Possible loss of precision happens when trying to put a larger thing into a smaller container (say, a _long_ in a _short_): _narrowing_.
@@ -83,12 +88,14 @@
     b = (byte) (b + 7);  // Won't compile without the cast, since b + 7 results in an int
     ```
 -  You can assign a subclass of the declared type but not a superclass of the declared type.
+
 ### Scope
 - There are four basic scopes:
     - Static variables: lives while a class is loaded in the JVM.
     - Instance variables: live while an instance lives.
     - Local variables: live while their method remains on the stack.
     - Block variables: live while the code block is executing.
+
 ### Variable Initialization
 - An instance variable is declared within the class but outside any method or constructor, whereas a local variable is declared within a method (or in the argument list of the method).
 - Local variables are sometimes called stack, temporary, automatic, or method variables.
@@ -125,6 +132,7 @@
         - When you use a String reference variable to modify a string:
             - A new string is created (or a matching String is found in the String pool), leaving the original String object untouched.
             - The reference used to modify the String (or rather, make a new String by modifying a copy of the original) is then assigned the brand new String object.
+
 ### Passing varibles into Methods
 - Passing Objects and Primitives
     - When you pass an object variable into a method, you're passing a copy of the object reference, not the actual object itself. But because they refer to the same object, if the called method modifies the object, the caller will see that the object the caller's original variable refers to has also been changed.
@@ -132,6 +140,7 @@
     - The called method can't change the caller's variable, although for object reference variables, the called method can change the object the variable referred to. For object references, it means the called method can't reassign the caller's original reference variable and make it refer to a different object
 or null.
 - Shadowing: reusing a variable name that's already been declared somewhere else.
+
 ### Garbage Collection
 - Overview
     - The exam focuses its garbage collection questions on non-String objects

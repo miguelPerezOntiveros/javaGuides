@@ -1,4 +1,5 @@
 # Chapter 2: Object Orientation
+
 ### Contents
 * Encapsulation
 * Inheritance
@@ -9,13 +10,16 @@
 * Constructors and Instantiation
 * Initialization Blocks
 * Static variables and methods
+
 ### Encapsulation
 - Provides you _maintainability_, _flexibility_, and _extensibility_.
 - You must keep instance variables protected with an access modifier (often private).
 - Make public accessor methods and use the most common naming convention of _set<someProperty>_ and _get<someProperty>_.
+
 ### Inheritance
 - Inheritance is most commonly used to promote code reuse and to use polymorphism.
 - _IS-A_ relation (based on class inheritance or interface implementation) != _HAS-A_ relation (class A HAS-A B if code in class A has a reference to an instance of class B).
+
 ### Polymorphism
 - "Many forms". Lets you treat any subclass of _foo_ as a _foo_.
 - The methods you can call on a reference are totally dependent on the declared type of the variable.
@@ -25,18 +29,23 @@
 - If a reference variable is declared as an interface type, it can reference any object of any class that implements the interface.
 - The compiler only knows about the declared reference type, but the Java Virtual Machine (JVM) at runtime knows what the object really is, so even if the subclass overrides an inherited method and it is called via a superclass reference, the JVM will invoke the subclass version. This only applies to instance methods, not static methods.
 - Works with interfaces as well as superclasses.
-###### Casting
+###
+### Casting
 - You can upcasting implicitly because you are restricting the number of methods you can invoke.
+
 ### Overriding and Overloading
-###### Overriding
+###
+### Overriding
 - If the inherited method is marked _final_, you can´t override it.
 - You cannot override a method marked _final_ or _static_.
 - If a method can't be inherited, you cannot override it (see Chapter 1). 
 - Invoking a Superclass Version of an Overridden Method: _super.bar()_.
 - If you call via a reference variable a method that declares a checked exception, then even if it is overriden and the overriden method does not declare exceptions, the compiler only knows about the original method with the exception.
-###### Overloading.
+###
+### Overloading.
 - A method can be overloaded in the same class or in a subclass.
-###### Differences
+###
+### Differences
 
 |             | Overloaded Method                                                                                                                                                                                                                            | Overriden Method                                                                                                  |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
@@ -45,6 +54,7 @@
 | Exceptions  | Can change.                                                                                                                                                                                                                                  | Can throw narrower, fewer or no exceptions. Must not throw new or broader checked exceptions. Can throw any unchecked (runtime) exception                                       |
 | Access      | Can change.                                                                                                                                                                                                                                  | Must not make more restrictive (can be less restrictive).                                                         |
 | Invocation  | Reference type determines which overloaded version (based on declared argument types) is selected. Happens at compile time. At runtime, the argument match will already have been nailed down, just not the class in which the method lives. | Object type (the type of the actual instance on the heap) determines which method is selected. Happens at runtime |
+
 ### Implementing an interface
 - An abstract class can implement an interface, and it can just pass the buck to its first concrete subclass.
 - A class cannot extend more than one class to prevent the “Deadly Diamond of Death”, but it can implement multiple interfaces:
@@ -52,12 +62,14 @@
     public class Ball implements Bounceable, Serializable, Runnable { ... };
     ```
 - An interface can never implement anything.
+
 ### Legal return types
 - If you inherit a method but overload it in a subclass, you're not subject to the restrictions of overriding, which means you can declare any return type you like. What you can't do is change only the return type.
 - Overridding: if the new return type is a subtype of the declared return type of the overridden method, the return is a covariant return.
 - Object reference return types: you can return any object type that can be implicitly cast to the declared return type, or _null_.
 - Primitive return types: you can return any value or variable that can be implicitly converted to the declared return type (for example, you can return a _char_ from an _int_ function).
 - _void_: although you can _return;_, you must not return anything.
+
 ### Constructors and Instantiation
 - They have no return type.
 - Their names must exactly match the class name.
@@ -71,6 +83,7 @@
 - Abstract classes have constructors, and those constructors are always called when a concrete subclass is instantiated.
 -  If your superclass does not have a no-arg constructor, then in your subclass you will not be able to use the default constructor call _super()_supplied by the compiler.
 - Constructors can´t be overriden (they are not methods), but they can be overloaded.
+
 ### Initialization Blocks
 - Initialization blocks run once, when the class is first loaded (static initialization blocks) or everytime an instance is created (instance initialization blocks).
 - Init blocks execute in the order in which they appear.
@@ -99,6 +112,7 @@
     2nd instance init
     1-arg const
     ```
+
 ### Static variables and methods
 - Used in the utility-method-always-runs-the-same scenario and the keep-a-running-total-of-instances scenario.
 - Because variables and methods marked static belong to the class, you need only have the class available to be able to invoke a static method or access a static variable (no need to have any instances of that class).

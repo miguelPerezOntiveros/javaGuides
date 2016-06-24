@@ -66,13 +66,17 @@
 				.attr('id', 'rightArrow');
 
 		$('#leftArrow').click( () =>{
-			if(currentPage > 1)
-				fillContent(--currentPage);
+			fillContent(--currentPage);
+			if(currentPage == 1)
+				$('#leftArrow').hide();
+			$('#rightArrow').show();
 		});
 
 		$('#rightArrow').click( () =>{
-			if(currentPage < 3)
-				fillContent(++currentPage);
+			fillContent(++currentPage);
+			if(currentPage == 3)
+				$('#rightArrow').hide();
+			$('#leftArrow').show();
 		});
 
 		var currentPage = 2;
