@@ -1,0 +1,35 @@
+body{
+	font-family: 'Amiri', serif;
+}
+
+h1 {
+	color: #227;
+}
+
+table {
+	width: 95%;
+	margin-left: 5%;
+	border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+}
+
+th {
+	color: white;
+	background-color: #227;
+}
+
+tr:nth-child(even) {
+	background-color: #EEE;
+}
+
+pre {
+	border: 1px solid #227;
+	background-image:         linear-gradient(#FFF 50%, #DEDEF3 50%);
+	background-position: 0 2.3em;
+	background-repeat: repeat;
+	background-size: 4em 4em;	
+	line-height: 2em;
+}

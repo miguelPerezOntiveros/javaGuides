@@ -80,15 +80,16 @@
 - An overriding method cannot throw checked exceptions that are broader than those thrown by the overridden method (Apart from _RuntimeException_). 
 ###### Common Exceptions
 - 10 exceptions and errors to cover OCA Objective 8.5.
-    | Exception                                  | Description                                                                                                                           | Typically Thrown |
-    |--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|------------------|
-    | ArrayIndexOutOfBoundsException,(Chapter 5) | Thrown when attempting to access an array with an invalid index value (either negative or beyond the length of the array).            | By the JVM       |
-    | ClassCastException,(Chapter 2)             | Thrown when attempting to cast a reference variable to a type that fails the IS-A test.                                               | By the JVM       |
-    | IllegalArgumentException                   | Thrown when a method receives an argument formatted differently than the method expects.                                              | Programmatically |
-    | IllegalStateException                      | Thrown when the state of the environment doesn't match the operation being attempted—for example, using a scanner that's been closed. | Programmatically |
-    | NullPointerException,(Chapter 3)           | Thrown when attempting to invoke a method on, or access a property from, a reference variable whose current value is null.            | By the JVM       |
-    | NumberFormatException,(this chapter)       | Thrown when a method that converts a String to a number receives a String that it cannot convert.                                     | Programmatically |
-    | AssertionError                             | Thrown when an assert statement's boolean test returns false.                                                                         | Programmatically |
-    | ExceptionInInitializerError,(Chapter 2)    | Thrown when attempting to initialize a static variable or an initialization block.                                                    | By the JVM       |
-    | StackOverflowError,(this chapter)          | Typically thrown when a method recurses too deeply. (Each invocation is added to the stack.)                                          | By the JVM       |
-    | NoClassDefFoundError                       | Thrown when the JVM can't find a class it needs, because of a command- line error, a classpath issue, or a missing .class file.       | By the JVM       |
+
+| Exception                                  | Description                                                                                                                           | Typically Thrown |
+|--------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| ArrayIndexOutOfBoundsException,(Chapter 5) | Thrown when attempting to access an array with an invalid index value (either negative or beyond the length of the array).            | By the JVM       |
+| ClassCastException,(Chapter 2)             | Thrown when attempting to cast a reference variable to a type that fails the IS-A test.                                               | By the JVM       |
+| IllegalArgumentException                   | Thrown when a method receives an argument formatted differently than the method expects.                                              | Programmatically |
+| IllegalStateException                      | Thrown when the state of the environment doesn't match the operation being attempted—for example, using a scanner that's been closed. | Programmatically |
+| NullPointerException,(Chapter 3)           | Thrown when attempting to invoke a method on, or access a property from, a reference variable whose current value is null.            | By the JVM       |
+| NumberFormatException,(this chapter)       | Thrown when a method that converts a String to a number receives a String that it cannot convert.                                     | Programmatically |
+| AssertionError                             | Thrown when an assert statement's boolean test returns false.                                                                         | Programmatically |
+| ExceptionInInitializerError,(Chapter 2)    | Thrown when attempting to initialize a static variable or an initialization block.                                                    | By the JVM       |
+| StackOverflowError,(this chapter)          | Typically thrown when a method recurses too deeply. (Each invocation is added to the stack.)                                          | By the JVM       |
+| NoClassDefFoundError                       | Thrown when the JVM can't find a class it needs, because of a command- line error, a classpath issue, or a missing .class file.       | By the JVM       |

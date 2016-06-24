@@ -93,19 +93,20 @@
 - An instance variable is declared within the class but outside any method or constructor, whereas a local variable is declared within a method (or in the argument list of the method).
 - Local variables are sometimes called stack, temporary, automatic, or method variables.
 - Although you can leave a local variable uninitialized, the compiler complains if you try to use a local variable before initializing it with a value.
-    - Instance Variables
-        - Default values for primitive and object types:
-            | Variable Type          | Default Value |
-            |------------------------|---------------|
-            | Object reference       | 0             |
-            | byte, short, int, long | 0             |
-            | float, double          | 0.0           |
-            | boolean                | false         |
-            | char                   | '\u0000'      |
     - Array instances
         - An array is an object.
         - if the array is initialized, all array elements are given their default values (the same default values that elements of that type get when they're instance variables).
         - Array elements are always, given default values, regardless of where the array itself is declared or instantiated.
+    - Instance Variables
+        - Default values for primitive and object types:
+        
+| Variable Type          | Default Value |
+|------------------------|---------------|
+| Object reference       | 0             |
+| byte, short, int, long | 0             |
+| float, double          | 0.0           |
+| boolean                | false         |
+| char                   | '\u0000'      |
 - Local (Stack, Automatic)
     - Primitives
         - Local variables, including primitives always must be initialized before you attempt to use them (though not necessarily on the same line of code).

@@ -72,13 +72,15 @@
 - Cannot be applied to local variables, only _final_ can.
 - _this._ always refers to the currently executing object.
 - Determining access
-    | Visibility                                     | Public | Protected                | Default | Private |
-    |------------------------------------------------|--------|--------------------------|---------|---------|
-    | From the same class                            | Yes    | Yes                      | Yes     | Yes     |
-    | From any class in the same package             | Yes    | Yes                      | Yes     | No      |
-    | From a subclass in the same package            | Yes    | Yes                      | Yes     | No      |
-    | From a subclass outside the same package       | Yes    | Yes, through inheritance | No      | No      |
-    | From any nonsubclass class outside the package | Yes    | No                       | No      | No      |
+
+| Visibility                                     | Public | Protected                | Default | Private |
+|------------------------------------------------|--------|--------------------------|---------|---------|
+| From the same class                            | Yes    | Yes                      | Yes     | Yes     |
+| From any class in the same package             | Yes    | Yes                      | Yes     | No      |
+| From a subclass in the same package            | Yes    | Yes                      | Yes     | No      |
+| From a subclass outside the same package       | Yes    | Yes, through inheritance | No      | No      |
+| From any nonsubclass class outside the package | Yes    | No                       | No      | No      |
+
 ###### Nonaccess modifiers (including strictfp, final, and abstract)
 - _final_ on a(n)...
     - Class: it can´t be subclassed.
@@ -113,14 +115,16 @@
 - Can't be _static_ (they are associated with object instantiation), _final_ or _abstract_ (they can't be overridden)
 ### Range of Numeric Primitives
 -  primitive types with their sizes and ranges.
-    | Type   | Bits | Bytes | Minimum Range | Maximum Range |
-    |--------|------|-------|---------------|---------------|
-    | byte   | 8    | 1     | -2 x 10^7     | 2 x 10^7 - 1  |
-    | short  | 16   | 2     | -2 x 10^15    | 2 x 10^15 - 1 |
-    | int    | 32   | 4     | -2 x 10^31    | 2 x 10^31 - 1 |
-    | long   | 64   | 8     | -2 x 10^63    | 2 x 10^63 - 1 |
-    | float  | 32   | 4     | n/a           | n/a           |
-    | double | 64   | 8     | n/a           | n/a           |
+
+| Type   | Bits | Bytes | Minimum Range | Maximum Range |
+|--------|------|-------|---------------|---------------|
+| byte   | 8    | 1     | -2 x 10^7     | 2 x 10^7 - 1  |
+| short  | 16   | 2     | -2 x 10^15    | 2 x 10^15 - 1 |
+| int    | 32   | 4     | -2 x 10^31    | 2 x 10^31 - 1 |
+| long   | 64   | 8     | -2 x 10^63    | 2 x 10^63 - 1 |
+| float  | 32   | 4     | n/a           | n/a           |
+| double | 64   | 8     | n/a           | n/a           |
+
 ### Enumerated Types
 - ``` java
     enum CoffeeSize { BIG, HUGE, OVERWHELMING };

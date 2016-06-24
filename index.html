@@ -5,12 +5,23 @@
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
+	<!-- marked -->
+	<script src="node_modules/marked/marked.min.js"></script>
+
+	<!-- code-prettyfy -->
+	<link href="google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="google-code-prettify/prettify.js"></script>
+
 	<!-- d3 -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
 
 	<!-- Bootstrap -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	
+	<link href='https://fonts.googleapis.com/css?family=Amiri' rel='stylesheet' type='text/css'>
+	<link href="style.css" rel="stylesheet">
+
 	<title>Document</title>
 </head>
 <body>
@@ -68,12 +79,40 @@
 		$('#leftArrow').trigger('click');
 
 		function fillContent(chapter){
-			$.get( 'OCA chapter' + ( chapter * 2 - 1 ) + '.md.html', function( data ) {
-				$('#leftMiddle').html(data);
-			});
-			$.get( 'OCA chapter' + ( chapter * 2 ) + '.md.html', function( data ) {
-				$('#rightMiddle').html(data);
-			});
+			window.done = 0;
+			new Promise(function(resolve){
+				$.get( 'md/OCA chapter' + ( chapter * 2 - 1 ) + '.md', function( data ) {
+					$('#leftMiddle').html(marked(data));
+					resolve();
+				});
+			}).then( () => {
+		    	window.done++;
+		    	if(done == 2)
+		    	{
+		    		$( "code" ).each(function() {
+					  $( this ).addClass( "prettyprint" );
+					}); 
+		    		prettyPrint();
+		    	}
+
+		    });
+
+			new Promise(function(resolve){
+				$.get( 'md/OCA chapter' + ( chapter * 2 ) + '.md', function( data ) {
+					$('#rightMiddle').html(marked(data));
+					resolve();
+				});
+			}).then( () => {
+		    	window.done++;
+		    	if(done == 2)
+		    	{
+		    		$( "code" ).each(function() {
+					  $( this ).addClass( "prettyprint" );
+					}); 
+		    		prettyPrint();
+		    	}
+
+		    });
 		}
 
 	</script>
