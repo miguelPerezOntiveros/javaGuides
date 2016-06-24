@@ -1,16 +1,5 @@
 # Chapter 2: Object Orientation
 
-### Contents
-* Encapsulation
-* Inheritance
-* Polymorphism
-* Overriding and Overloading
-* Implementing an interface
-* Legal return types
-* Constructors and Instantiation
-* Initialization Blocks
-* Static variables and methods
-
 ### Encapsulation
 - Provides you _maintainability_, _flexibility_, and _extensibility_.
 - You must keep instance variables protected with an access modifier (often private).

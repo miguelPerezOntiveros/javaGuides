@@ -20,6 +20,75 @@
 	<link href="style.css" rel="stylesheet">
 
 	<title>Document</title>
+
+	<style>
+		.group {
+		    background: yellow;
+		    width: 200px;
+		}
+		.group .subgroup {
+		    background: orange;
+		    width: 150px;
+		}
+		.fixed {
+		    position: fixed;
+		}
+
+		/* sidebar */
+		.bs-docs-sidebar {
+		    padding-left: 20px;
+		    margin-top: 20px;
+		    margin-bottom: 20px;
+		}
+
+		/* all links */
+		.bs-docs-sidebar .nav>li>a {
+		    color: #999;
+		    border-left: 2px solid transparent;
+		    padding: 4px 20px;
+		    font-size: 13px;
+		    font-weight: 400;
+		}
+
+		/* nested links */
+		.bs-docs-sidebar .nav .nav>li>a {
+		    padding-top: 1px;
+		    padding-bottom: 1px;
+		    padding-left: 30px;
+		    font-size: 12px;
+		}
+
+		/* active & hover links */
+		.bs-docs-sidebar .nav>.active>a, 
+		.bs-docs-sidebar .nav>li>a:hover, 
+		.bs-docs-sidebar .nav>li>a:focus {
+		    color: #563d7c;                 
+		    text-decoration: none;          
+		    background-color: transparent;  
+		    border-left-color: #563d7c; 
+		}
+		/* all active links */
+		.bs-docs-sidebar .nav>.active>a, 
+		.bs-docs-sidebar .nav>.active:hover>a,
+		.bs-docs-sidebar .nav>.active:focus>a {
+		    font-weight: 700;
+		}
+		/* nested active links */
+		.bs-docs-sidebar .nav .nav>.active>a, 
+		.bs-docs-sidebar .nav .nav>.active:hover>a,
+		.bs-docs-sidebar .nav .nav>.active:focus>a {
+		    font-weight: 500;
+		}
+
+		/* hide inactive nested list */
+		.bs-docs-sidebar .nav ul.nav {
+		    display: none;           
+		}
+		/* show active nested list */
+		.bs-docs-sidebar .nav>.active>ul.nav {
+		    display: block;           
+		}
+	</style>
 </head>
 <body>
 	<div class="row" style="height:5vh;">
@@ -46,21 +115,60 @@
 			</div>
 
 			<div class="col-md-11" style="overflow: scroll; height: 95vh;">
-				<div class="col-md-2">
-					nav goes here
-				</div>
+				<!-- nav -->
+					<nav class="col-md-2 bs-docs-sidebar">
+				        <ul id="sidebarleftMiddle" class="nav nav-stacked fixed">
+				            
+<!-- 				          
+$('#'+id).find('h6').each( (id, entry)=>{ $('#sidebar').append( '<li><a href="#' + $(entry).html() +'">' + $(entry).html() +'</a></li>' ); });
+									
+							<li>
+				                <a href="#GroupA">Group A</a>
+				                <ul class="nav nav-stacked">
+				                    <li><a href="#GroupASub1">Sub-Group 1</a></li>
+				                    <li><a href="#GroupASub2">Sub-Group 2</a></li>
+				                </ul>
+				            </li>
+				            <li>
+				                <a href="#GroupB">Group B</a>
+				                <ul class="nav nav-stacked">
+				                    <li><a href="#GroupBSub1">Sub-Group 1</a></li>
+				                    <li><a href="#GroupBSub2">Sub-Group 2</a></li>
+				                </ul>
+				            </li> 
+-->
+
+				        </ul>
+				    </nav>
+			    <!-- /nav -->
 				<div class="col-md-10">
 					<div id="leftMiddle"></div>
 				</div>
 			</div>
-		</div>
-
+		</div>	
 
 		<div class="col-md-6">
 			<div class="col-md-11" style="overflow: scroll; height: 95vh;">
-				<div class="col-md-2">
-					nav goes here
-				</div>
+				<!-- nav -->
+					<nav class="col-md-2 bs-docs-sidebar">
+				        <ul id="sidebarrightMiddle" class="nav nav-stacked fixed">
+				            <li>
+				                <a href="#GroupA">Group A</a>
+				                <ul class="nav nav-stacked">
+				                    <li><a href="#GroupASub1">Sub-Group 1</a></li>
+				                    <li><a href="#GroupASub2">Sub-Group 2</a></li>
+				                </ul>
+				            </li>
+				            <li>
+				                <a href="#GroupB">Group B</a>
+				                <ul class="nav nav-stacked">
+				                    <li><a href="#GroupBSub1">Sub-Group 1</a></li>
+				                    <li><a href="#GroupBSub2">Sub-Group 2</a></li>
+				                </ul>
+				            </li>
+				        </ul>
+				    </nav>
+			    <!-- /nav -->
 				<div class="col-md-10">
 					<div id="rightMiddle"></div>
 				</div>
@@ -91,42 +199,45 @@
 			if(currentPage == 3)
 				$('#rightArrow').hide();
 
-			window.done = 0;
+			window.loaded = 0;
 			new Promise(function(resolve){
 				$.get( 'md/OCA chapter' + ( chapter * 2 - 1 ) + '.md', function( data ) {
 					$('#leftMiddle').html(marked(data));
-					resolve();
+					resolve('leftMiddle');
 				});
-			}).then( () => {
-		    	window.done++;
-		    	if(done == 2)
-		    	{
-		    		$( "code" ).each(function() {
-					  $( this ).addClass( "prettyprint" );
-					}); 
-		    		prettyPrint();
-		    	}
-
-		    });
+			}).then( afterLoading );
 
 			new Promise(function(resolve){
 				$.get( 'md/OCA chapter' + ( chapter * 2 ) + '.md', function( data ) {
 					$('#rightMiddle').html(marked(data));
-					resolve();
+					resolve('rightMiddle');
 				});
-			}).then( () => {
-		    	window.done++;
-		    	if(done == 2)
+			}).then( afterLoading );
+		}
+
+		function afterLoading(id){
+				$('#sidebar' + id).html('');
+				$('#'+id).find('h3').each( (num, entry)=>{ 
+					$('#sidebar' + id).append( '<li><a href="#' + id + num +'">' + $(entry).html() +'</a></li>' ); 
+					$(entry).prepend('<section id = ' + id + num +'></section>' );
+				});
+
+				$('#' + id).parent().parent().animate({ scrollTop: (0) }, 'fast');
+
+				if(++window.loaded == 2)
 		    	{
 		    		$( "code" ).each(function() {
 					  $( this ).addClass( "prettyprint" );
 					}); 
 		    		prettyPrint();
 		    	}
-
-		    });
 		}
 
+		$('body').scrollspy({
+		    target: '.bs-docs-sidebar',
+		    offset: 40
+		});
 	</script>
+
 </body>
 </html>

@@ -1,15 +1,5 @@
 # Chapter 3: Assignments
 
-### Contents
-* Stack and Heap
-* Literals
-* Assignment Operators
-* Primitive Casting
-* Scope
-* Variable Initialization
-* Passing varibles into Methods
-* Garbage Collection
-
 ### Stack and Heap
 - The pieces of a Java program (methods, variables and objects) live in one of two places in memory:
     - The stack: for functions and local variables.

@@ -1,12 +1,4 @@
 # Chapter 4: Operators
-### Contents
-* Overloaded operators
-* Assignment Operators
-* Relational Operators
-* _instanceof_ Comparison
-* Arithmetic Operators
-* Conditional Operator
-* Short-Circuit Logical Operators
 
 ### Overloaded operators
 - The + operator can be used to add two numeric primitives together or to perform a concatenation operation if either operand is a _String_.

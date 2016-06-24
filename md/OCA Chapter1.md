@@ -1,6 +1,6 @@
 # Chapter 1: Declarations and Access Control
 
-### Identifiers, Keywords, Source File Rules and Conventions
+### Identifiers and Keywords
 
 ###### Legal Identifiers
 - Must start with a letter, currency character or connecting character. May contain numbers after that.
@@ -10,6 +10,8 @@
 
 ###### Keywords (50 in total)
 - abstract, boolean, break, byte, case, catch, char, class, const, continue, default, do, double, else, extends, final, finally, float, for, goto, if, implements, import, instanceof, int, interface, long, native, new, package, private, protected, public, return, short, static, strictfp, super, switch, synchronized, this, throw, throws, transient, try, void, volatile, while, assert, enum.
+
+### Source Rules and Conventions
 
 ###### Source File Declaration Rules
 - The number of public classes in a source code file can be either 1 or 0. If 1, its name and the file name must match.

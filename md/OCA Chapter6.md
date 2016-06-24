@@ -1,11 +1,6 @@
 # Chapter 6: Flow Control and Exceptions
 
-### Contents
-* Decision statements (_if_, _else_ and _switch_)
-* Loops (_for_, _do_ and _while_)
-* Exceptions
-
-### Decision statements (_if_, _else_ and _switch_)
+### Decision statements
 
 ###### _if_ and _else_
 - 1 y 0 are not boolean expressions in Java. 

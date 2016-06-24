@@ -1,10 +1,5 @@
 # Chapter 5: Strings, Arrays and ArrayLists
 
-### Contents
-* Strings
-* Arrays
-* ArrayLists
-
 ### Strings
 
 ###### The _String_ Class
