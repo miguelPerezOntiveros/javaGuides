@@ -12,9 +12,6 @@
 	<link href="google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript" src="google-code-prettify/prettify.js"></script>
 
-	<!-- d3 -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
-
 	<!-- Bootstrap -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -25,64 +22,75 @@
 	<title>Document</title>
 </head>
 <body>
+	<div class="row" style="height:5vh;">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-1"></div>
+			<div class="col-md-1"></div>
+			<div id="menu1" class="col-md-1"><h1>1 - 2</h1></div>
+			<div id="menu2" class="col-md-1"><h1>3 - 4</h1></div>
+			<div id="menu3" class="col-md-1"><h1>5 - 6</h1></div>
+			<div id="menu4" class="col-md-1"><h1>7 - 8</h1></div>
+			<div id="menu5" class="col-md-1"><h1>9 - 10</h1></div>
+			<div id="menu6" class="col-md-1"><h1>11 - 12</h1></div>
+			<div id="menu7" class="col-md-1"><h1>13 - 14</h1></div>
+			<div id="menu8" class="col-md-1"><h1>15 - Appx.</h1></div>
+			<div class="col-md-1"></div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+
 	<div class="row">
-		<div id ="leftSide" class="col-md-1"></div>
+		<div class="col-md-6">
+			<div id ="leftSide" class="col-md-1">
+				<a id="leftArrow">LEFT ARROW</a>
+			</div>
 
-		<div id="leftMiddle" class="col-md-5"></div>
-		<div id="rightMiddle" class="col-md-5"></div>
+			<div class="col-md-11" style="overflow: scroll; height: 95vh;">
+				<div class="col-md-2">
+					nav goes here
+				</div>
+				<div class="col-md-10">
+					<div id="leftMiddle"></div>
+				</div>
+			</div>
+		</div>
 
-		<div id ="rightSide" class="col-md-1"></div>
+
+		<div class="col-md-6">
+			<div class="col-md-11" style="overflow: scroll; height: 95vh;">
+				<div class="col-md-2">
+					nav goes here
+				</div>
+				<div class="col-md-10">
+					<div id="rightMiddle"></div>
+				</div>
+			</div>
+				
+			<div id ="rightSide" class="col-md-1">
+				<a id="rightArrow">RIGHT ARROW</a>
+			</div>		
+		</div>
 	</div>
 	
 	<script>
 
-		var sideWidth = $('#leftSide').width();
-		var sideHeight = $( window ).height();
-
-		var arrowSide = 100, arrowMargin = 20;
-		
-		var leftCanvas = d3.select('#leftSide')
-			.append('svg')
-				.attr('width', sideWidth)
-				.attr('height', sideHeight)
-			.append('rect')
-				.attr('width', arrowSide )
-				.attr('height', arrowSide )
-				.attr('x', arrowMargin )
-				.attr('y', sideHeight/2 - arrowSide/2 )
-				.attr('fill', '#ff0000')
-				.attr('id', 'leftArrow');
-
-		var rightCanvas = d3.select('#rightSide')
-			.append('svg')
-				.attr('width', sideWidth)
-				.attr('height', sideHeight)
-			.append('rect')
-				.attr('width', arrowSide )
-				.attr('height', arrowSide )
-				.attr('x', sideWidth - arrowSide - arrowMargin)
-				.attr('y', sideHeight/2 - arrowSide/2 )
-				.attr('fill', '#00ff00')
-				.attr('id', 'rightArrow');
-
-		$('#leftArrow').click( () =>{
-			fillContent(--currentPage);
-			if(currentPage == 1)
-				$('#leftArrow').hide();
-			$('#rightArrow').show();
-		});
-
-		$('#rightArrow').click( () =>{
-			fillContent(++currentPage);
-			if(currentPage == 3)
-				$('#rightArrow').hide();
-			$('#leftArrow').show();
-		});
+		$('#leftArrow').click( () =>{ fillContent(--currentPage); });
+		$('#rightArrow').click( () =>{ fillContent(++currentPage); });
+		$('#menu1').click( () =>{ fillContent(1); });
+		$('#menu2').click( () =>{ fillContent(2); });
+		$('#menu3').click( () =>{ fillContent(3); });
 
 		var currentPage = 2;
 		$('#leftArrow').trigger('click');
 
 		function fillContent(chapter){
+			$('#leftArrow').show();
+			$('#rightArrow').show();
+			if(currentPage == 1)
+				$('#leftArrow').hide();
+			if(currentPage == 3)
+				$('#rightArrow').hide();
+
 			window.done = 0;
 			new Promise(function(resolve){
 				$.get( 'md/OCA chapter' + ( chapter * 2 - 1 ) + '.md', function( data ) {

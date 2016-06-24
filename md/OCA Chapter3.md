@@ -37,12 +37,12 @@
     - Represented by a single character in single quotes.
     - You can also type in the Unicode value of the character, prefixing the value with \u: _'u004E'_ represents the character _N_.
     - Characters are just 16-bit unsigned integers under the hood.
-    - ``` java
+    ``` java
         char a = 0x892;         // hexadecimal literal
         char b = 982;           // int literal
-        char c = (char) 70000;  // the cast is required; 70000 iso out of char range.
+        char c = (char) 70000;  // the cast is required; 70000 is out of char range.
         char d = (char) -98     // legal
-        ```
+    ```
 - String literals
     - Strings are not primitives, but can be represented as literals.
     - The only other nonprimitive type that has a literal representation is an array, which we'll look at later in the chapter.

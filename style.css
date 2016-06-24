@@ -27,7 +27,7 @@ tr:nth-child(even) {
 
 pre {
 	border: 1px solid #227;
-	background-image:         linear-gradient(#FFF 50%, #DEDEF3 50%);
+	background-image:         linear-gradient(#FFF 50%, #dfdfff 50%);
 	background-position: 0 0.8em;
 	background-repeat: repeat;
 	background-size: 4em 4em;	

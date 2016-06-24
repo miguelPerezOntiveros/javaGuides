@@ -1,16 +1,5 @@
 # Chapter 1: Declarations and Access Control
 
-### Contents
-* Identifiers, Keywords, Source File Rules and Conventions
-* javac and java
-* The special main()
-* Import Statements
-* Modifiers 
-* Interfaces 
-* Constructors
-* Range of Numeric Primitives
-* Enumerated types
-
 ### Identifiers, Keywords, Source File Rules and Conventions
 
 ###### Legal Identifiers
