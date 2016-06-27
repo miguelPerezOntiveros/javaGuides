@@ -22,7 +22,7 @@
 - Interfaces: should be adjectives: _Runnable_ and _Serializable_.
 - Variables and methods: should be CamelCase but with a lowercase first character. 
 - Methods: should be verb-noun pairs: _getBalance_.
-- Constants: should be uppercase with underscores as separators: _MIN_HEIGHT_.
+- Constants: should be uppercase with underscores as separators: _MIN_\__HEIGHT_.
 
 ### javac and java
 - Compile: _javac_ [options] [source files]

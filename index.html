@@ -24,18 +24,15 @@
 	<style>
 		#guides {
 			position: absolute;
-			top: 1vh;
+			top: 0;
 		}
 
-		#movable {
-		    position:relative;
-		    top:-70px;
-		}
-
-		#movable:hover {
-		    position:relative;
-		    margin-bottom: 50px;
-		    top:-15px;    
+		#hoverable {
+			z-index:1;
+		    position:absolute;
+		    margin: 0;
+		    left: 50%;
+		    transform: translate(-50%, 0%)
 		}
 
 		.fixed {
@@ -99,15 +96,16 @@
 	</style>
 </head>
 <body>
-
-	<div class="row" id="movable" style="background-color:lightgrey;">
-	<h1>
-		<div class="col-md-2 col-md-offset-1">
+<!-- 
+<div class="container">
+	<div class="row" id="hoverable">
+	<h3>
+		<div class="col-md-1">
 			<ul class="nav nav-pills">
 			  <li style="float:right"><a id="leftArrow">Previous</a></li>
 			</ul>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-10">
 			<div class="row text-center">
 				<ul id="top" class="nav nav-pills" style= "display:inline-block;">
 				  <li><a id="menu1">1 - 2</a></li>
@@ -121,18 +119,48 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<ul class="nav nav-pills">
 			  <li><a id="rightArrow">Next</a></li>
 			</ul>
 		</div>
-	</h1>
+	</h3>
 	</div>
+</div>
+ -->
+	 <div class="" id="hoverable">
+		<nav class="navbar navbar-default" id="movable">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse">
+					<ul id="top" class="nav navbar-nav">
+						<li><a id="menu1">1 - 2</a></li>
+						<li><a id="menu2">3 - 4</a></li>
+						<li><a id="menu3">5 - 6</a></li>
+						<li><a id="menu4">7 - 8</a></li>
+						<li><a id="menu5">9 - 10</a></li>
+						<li><a id="menu6">11 - 12</a></li>
+						<li><a id="menu7">13 - 14</a></li>
+						<li><a id="menu8">15 - Appx.</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+	</div>
+
+<!-- 	<div class="container" style="background-color:lightgrey; z-index::;" id="trigger">
+		<div class="row">
+			<div class="col-md-12">
+				<br>
+				<br>
+				<br>
+			</div>
+		</div>
+	</div> -->
 
 	<div class="row" id="guides">
 		<div class="col-md-6">
 
-			<div class="col-md-12" style="overflow: scroll; height: 99vh;">
+			<div class="col-md-12" style="overflow: scroll; height: 100vh;">
 				<!-- nav -->
 					<nav class="col-md-2 bs-docs-sidebar">
 				        <ul id="sidebarleftMiddle" class="nav nav-stacked fixed"></ul>
@@ -145,7 +173,7 @@
 		</div>	
 
 		<div class="col-md-6">
-			<div class="col-md-12" style="overflow: scroll; height: 99vh;">
+			<div class="col-md-12" style="overflow: scroll; height: 100vh;">
 				<!-- nav -->
 					<nav class="col-md-2 bs-docs-sidebar">
 				        <ul id="sidebarrightMiddle" class="nav nav-stacked fixed"></ul>
@@ -160,13 +188,31 @@
 	</div>
 	
 	<script>
-		document.onkeydown = (e) => {
-		    e = e || window.event;
+		window.inTriggerZone = false;
+		window.triggerZoneThresh = 100;
+		document.onmousemove = (event) => {
+			if(event.pageY < triggerZoneThresh && !inTriggerZone)
+			{
+				$("#hoverable").animate({marginTop: '0px'});
+				inTriggerZone = true;
+			}
+			if(event.pageY >= triggerZoneThresh && inTriggerZone)
+			{
+				$("#hoverable").animate({marginTop: '-' + $("#hoverable").height() +'px'});
 
+				inTriggerZone = false;
+			}
+	    };
+
+		$("#hoverable").css({marginTop: '-' + $("#hoverable").height() +'px'});
+    	
+		document.onkeydown = (e) => {
 		    if (e.keyCode == '38') {
+		    	$("#movable").slideUp(); 
 		        // up arrow
 		    }
 		    else if (e.keyCode == '40') {
+		    	$("#movable").slideDown();
 		        // down arrow
 		    }
 		    else if (e.keyCode == '37') {
