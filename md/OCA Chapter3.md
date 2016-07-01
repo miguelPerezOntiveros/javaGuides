@@ -25,7 +25,7 @@
     - _true_ or _false_. They can´t be _0_ or _1_.
 - _Character_ literals.
     - Represented by a single character in single quotes.
-    - You can also type in the Unicode value of the character, prefixing the value with \u: _'u004E'_ represents the character _N_.
+    - You can also type in the Unicode value of the character, prefixing the value with \u: _'\u004E'_ represents the character _N_.
     - Characters are just 16-bit unsigned integers under the hood.
     ``` java
         char a = 0x892;         // hexadecimal literal
@@ -56,7 +56,7 @@
     ```
 
 ### Primitive Casting
-- Typically, an implicit cast (one you don´t have to write) happens when you're doing a widening conversion: putting a smaller thing into a bigger container (say, a _byte_ in an _int_).
+- Typically, an implicit cast (one you don´t have to write) happens when you're doing a _widening_ conversion: putting a smaller thing into a bigger container (say, a _byte_ in an _int_).
 - Possible loss of precision happens when trying to put a larger thing into a smaller container (say, a _long_ in a _short_): _narrowing_.
 - When you cast a floating-point number to an integer type, the value loses all the digits after the decimal.
 -  This results in the byte having a value of _-126_.
@@ -81,7 +81,7 @@
 
 ### Scope
 - There are four basic scopes:
-    - Static variables: lives while a class is loaded in the JVM.
+    - Static variables: live while a class is loaded in the JVM.
     - Instance variables: live while an instance lives.
     - Local variables: live while their method remains on the stack.
     - Block variables: live while the code block is executing.
@@ -89,7 +89,7 @@
 ### Variable Initialization
 - An instance variable is declared within the class but outside any method or constructor, whereas a local variable is declared within a method (or in the argument list of the method).
 - Local variables are sometimes called stack, temporary, automatic, or method variables.
-- Although you can leave a local variable uninitialized, the compiler complains if you try to use a local variable before initializing it with a value.
+- Although you can leave a local variable uninitialized, the compiler complains if you try to use it before initializing it with a value.
     - Array instances
         - An array is an object.
         - if the array is initialized, all array elements are given their default values (the same default values that elements of that type get when they're instance variables).

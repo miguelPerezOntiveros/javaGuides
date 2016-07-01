@@ -7,7 +7,7 @@ h1 {
 }
 
 table {
-	width: 95%;
+	width: 80%;
 	margin-left: 5%;
 	border-collapse: collapse;
 }
@@ -26,6 +26,7 @@ tr:nth-child(even) {
 }
 
 pre {
+	width: 80%;
 	border: 1px solid #227;
 	background-image:         linear-gradient(#FFF 50%, #dfdfff 50%);
 	background-position: 0 0.8em;

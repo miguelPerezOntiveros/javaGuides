@@ -22,11 +22,6 @@
 	<title>Document</title>
 
 	<style>
-		#guides {
-			position: absolute;
-			top: 0;
-		}
-
 		#hoverable {
 			z-index:1;
 		    position:absolute;
@@ -96,97 +91,35 @@
 	</style>
 </head>
 <body>
-<!-- 
-<div class="container">
-	<div class="row" id="hoverable">
-	<h3>
-		<div class="col-md-1">
-			<ul class="nav nav-pills">
-			  <li style="float:right"><a id="leftArrow">Previous</a></li>
-			</ul>
-		</div>
-		<div class="col-md-10">
-			<div class="row text-center">
-				<ul id="top" class="nav nav-pills" style= "display:inline-block;">
-				  <li><a id="menu1">1 - 2</a></li>
-				  <li><a id="menu2">3 - 4</a></li>
-				  <li><a id="menu3">5 - 6</a></li>
-				  <li><a id="menu4">7 - 8</a></li>
-				  <li><a id="menu5">9 - 10</a></li>
-				  <li><a id="menu6">11 - 12</a></li>
-				  <li><a id="menu7">13 - 14</a></li>
-				  <li><a id="menu8">15 - Appx.</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-1">
-			<ul class="nav nav-pills">
-			  <li><a id="rightArrow">Next</a></li>
-			</ul>
-		</div>
-	</h3>
-	</div>
-</div>
- -->
-	 <div class="" id="hoverable">
+	 <div id="hoverable">
 		<nav class="navbar navbar-default" id="movable">
 			<div class="container-fluid">
 				<div class="collapse navbar-collapse">
 					<ul id="top" class="nav navbar-nav">
-						<li><a id="menu1">1 - 2</a></li>
-						<li><a id="menu2">3 - 4</a></li>
-						<li><a id="menu3">5 - 6</a></li>
-						<li><a id="menu4">7 - 8</a></li>
-						<li><a id="menu5">9 - 10</a></li>
-						<li><a id="menu6">11 - 12</a></li>
-						<li><a id="menu7">13 - 14</a></li>
-						<li><a id="menu8">15 - Appx.</a></li>
+						<li><a id="menu1">1</a></li>
+						<li><a id="menu2">2</a></li>
+						<li><a id="menu3">3</a></li>
+						<li><a id="menu4">4</a></li>
+						<li><a id="menu5">5</a></li>
+						<li><a id="menu6">6</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
 	</div>
 
-<!-- 	<div class="container" style="background-color:lightgrey; z-index::;" id="trigger">
-		<div class="row">
-			<div class="col-md-12">
-				<br>
-				<br>
-				<br>
+	<div class="container" style="text-align: justify;">
+		<div class="row" id="guides">
+			<div class="col-md-3">	
+				<nav class="bs-docs-sidebar">
+			        <ul id="sidebar" class="nav nav-stacked fixed"></ul>
+			    </nav>
+			</div>
+			<div class="col-md-9">
+				<div id="middle"></div>
 			</div>
 		</div>
-	</div> -->
-
-	<div class="row" id="guides">
-		<div class="col-md-6">
-
-			<div class="col-md-12" style="overflow: scroll; height: 100vh;">
-				<!-- nav -->
-					<nav class="col-md-2 bs-docs-sidebar">
-				        <ul id="sidebarleftMiddle" class="nav nav-stacked fixed"></ul>
-				    </nav>
-			    <!-- /nav -->
-				<div class="col-md-10">
-					<div id="leftMiddle"></div>
-				</div>
-			</div>
-		</div>	
-
-		<div class="col-md-6">
-			<div class="col-md-12" style="overflow: scroll; height: 100vh;">
-				<!-- nav -->
-					<nav class="col-md-2 bs-docs-sidebar">
-				        <ul id="sidebarrightMiddle" class="nav nav-stacked fixed"></ul>
-				    </nav>
-			    <!-- /nav -->
-				<div class="col-md-10">
-					<div id="rightMiddle"></div>
-				</div>
-			</div>	
-		</div>
-
 	</div>
-	
 	<script>
 		window.inTriggerZone = false;
 		window.triggerZoneThresh = 100;
@@ -207,90 +140,83 @@
 		$("#hoverable").css({marginTop: '-' + $("#hoverable").height() +'px'});
     	
 		document.onkeydown = (e) => {
-		    if (e.keyCode == '38') {
-		    	$("#movable").slideUp(); 
-		        // up arrow
-		    }
-		    else if (e.keyCode == '40') {
-		    	$("#movable").slideDown();
-		        // down arrow
-		    }
-		    else if (e.keyCode == '37') {
-		    	fillContent(--currentPage);
-		       // left arrow
-		    }
-		    else if (e.keyCode == '39') {
-		    	fillContent(++currentPage);
-		       // right arrow
+			switch(e.keyCode)
+			{
+				case 38: // up
+					break;
+				case 40: // down
+		    		break;
+		    	case 37:
+		    		fillContent(--currentPage); // left
+		    		break;
+		    	case 39:
+		    		fillContent(++currentPage); // right
+		    		break;
 		    }
 
 		}
 
 		$('#leftArrow').click( () =>{ fillContent(--currentPage); });
 		$('#rightArrow').click( () =>{ fillContent(++currentPage); });
-		$('#menu1').click( (e) =>{ fillContent(currentPage = 1); });
-		$('#menu2').click( (e) =>{ fillContent(currentPage = 2); });
-		$('#menu3').click( (e) =>{ fillContent(currentPage = 3); });
+
+		for(let i = 0; i < 20; i++)
+			$('#menu' + i).click( () => fillContent(currentPage = i) );
 
 		var currentPage = 1;
 		fillContent(currentPage);
 
+		var upperLimit = 6;
+		var lowerLimit = 1;
+
 		function fillContent(chapter){
-			if(currentPage < 1)
-				currentPage = 1;
-			if(currentPage > 3)
-				currentPage = 3;
+			if(currentPage < lowerLimit)
+				currentPage = lowerLimit;
+			if(currentPage > upperLimit)
+				currentPage = upperLimit;
 
 			 $('#top').children().each( (i, e) => { $(e).removeClass('active'); } );
 			 $('#menu'+currentPage).parent().addClass('active'); 
 
 			$('#leftArrow').show();
 			$('#rightArrow').show();
-			if(currentPage == 1)
+			if(currentPage == lowerLimit)
 				$('#leftArrow').hide();
-			if(currentPage == 3)
+			if(currentPage == upperLimit)
 				$('#rightArrow').hide();
 			
-
-			window.loaded = 0;
 			new Promise(function(resolve){
-				$.get( 'md/OCA chapter' + ( chapter * 2 - 1 ) + '.md', function( data ) {
-					$('#leftMiddle').html(marked(data));
-					resolve('leftMiddle');
-				});
-			}).then( afterLoading );
-
-			new Promise(function(resolve){
-				$.get( 'md/OCA chapter' + ( chapter * 2 ) + '.md', function( data ) {
-					$('#rightMiddle').html(marked(data));
-					resolve('rightMiddle');
+				$.get( 'md/OCA chapter' + chapter + '.md', function( data ) {
+					$('#middle').html(marked(data));
+					resolve('middle');
 				});
 			}).then( afterLoading );
 		}
 
 		function afterLoading(id){
-				$('#sidebar' + id).html('');
-				$('#'+id).find('h3').each( (num, entry)=>{ 
-					$('#sidebar' + id).append( '<li><a href="#' + id + num +'">' + $(entry).html() +'</a></li>' ); 
+				$('#sidebar').html('');
+				var h3cnt = 0;
+				$('#'+id).find('h3, h6').each( (num, entry)=>{ 
+					if( $(entry).is('h3') )
+						$('#sidebar').append('<li><a href="#' + id + num +'">' + $(entry).html() +'</a><ul class="nav nav-stacked" id="' + id + (++h3cnt) + '_sub_ul"></ul></li>'); 
+					else
+						$('#' + id + h3cnt + '_sub_ul').append('<li><a href="#' + id + num +'">' + $(entry).html() +'</a></li>');
+				
 					$(entry).prepend('<section id = ' + id + num +'></section>' );
 				});
 
-				$('#' + id).parent().parent().animate({ scrollTop: (0) }, 'fast');
+				$('body').animate({ scrollTop: (0) }, 'fast');
 
-				if(++window.loaded == 2)
-		    	{
-		    		$( "code" ).each(function() {
-					  $( this ).addClass( "prettyprint" );
-					}); 
-		    		prettyPrint();
+				$( "code" ).each(function() {
+				  $( this ).addClass( "prettyprint" );
+				}); 
+	    		prettyPrint();
 
-		    	}
+				$('body').scrollspy({
+				    target: '.bs-docs-sidebar',
+				    offset: 40
+				});
 		}
 
-		$('body').scrollspy({
-		    target: '.bs-docs-sidebar',
-		    offset: 40
-		});
 	</script>
 
 </body>

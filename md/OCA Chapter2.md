@@ -20,15 +20,14 @@
 - Works with interfaces as well as superclasses.
 
 ###### Casting
-- You can upcasting implicitly because you are restricting the number of methods you can invoke.
+- Upcasting(to a more general type) happens implicitly because you are restricting the number of methods you can invoke.
 
 ### Overriding and Overloading
 
 ###### Overriding
-- If the inherited method is marked _final_, you can´t override it.
-- You cannot override a method marked _final_ or _static_.
 - If a method can't be inherited, you cannot override it (see Chapter 1). 
-- Invoking a Superclass Version of an Overridden Method: _super.bar()_.
+- You can't override a method marked _final_ or _static_.
+- To invoke the Superclass version of an overridden Method: _super.bar()_.
 - If you call via a reference variable a method that declares a checked exception, then even if it is overriden and the overriden method does not declare exceptions, the compiler only knows about the original method with the exception.
 
 ###### Overloading.
@@ -39,7 +38,7 @@
 |             | Overloaded Method                                                                                                                                                                                                                            | Overriden Method                                                                                                  |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | Argument(s) | Must change.                                                                                                                                                                                                                                 | Must not change.                                                                                                  |
-| Return type | Can change.                                                                                                                                                                                                                                  | Can't change except for covariant returns. (Covered later this chapter.)                                          |
+| Return type | Can change.                                                                                                                                                                                                                                  | Can't change except for covariant returns (Covered later this chapter).                                           |
 | Exceptions  | Can change.                                                                                                                                                                                                                                  | Can throw narrower, fewer or no exceptions. Must not throw new or broader checked exceptions. Can throw any unchecked (runtime) exception                                       |
 | Access      | Can change.                                                                                                                                                                                                                                  | Must not make more restrictive (can be less restrictive).                                                         |
 | Invocation  | Reference type determines which overloaded version (based on declared argument types) is selected. Happens at compile time. At runtime, the argument match will already have been nailed down, just not the class in which the method lives. | Object type (the type of the actual instance on the heap) determines which method is selected. Happens at runtime |
@@ -53,7 +52,7 @@
 - An interface can never implement anything.
 
 ### Legal return types
-- If you inherit a method but overload it in a subclass, you're not subject to the restrictions of overriding, which means you can declare any return type you like. What you can't do is change only the return type.
+- If you inherit a method but overload it in a subclass, you're not subject to the restrictions of overriding, which means you can declare any return type you like. What you can't do is change only the return type (argument list must change).
 - Overridding: if the new return type is a subtype of the declared return type of the overridden method, the return is a covariant return.
 - Object reference return types: you can return any object type that can be implicitly cast to the declared return type, or _null_.
 - Primitive return types: you can return any value or variable that can be implicitly converted to the declared return type (for example, you can return a _char_ from an _int_ function).
@@ -67,7 +66,7 @@
 - Constructors can use any access modifier, including _private_. 
 - If you don't type a constructor into your class code, a default (same access modifier as the class, no arguments and a no-arg call to the super constructor: _super()_) constructor will be automatically generated by the compiler. If you've typed in a constructor with arguments, you won't have a no-arg constructor unless you type it in yourself.
 - Every constructor has, as its first statement, either a call to an overloaded constructor (_this()_) or a call to the superclass constructor (_super()_).
-- If you type a constructor and don´t make the call to _this()_ or _super()_, the compiler will insert a no-arg call to _super()_ as the first statement in the contructor.
+- If you type a constructor and don´t make the call to _this()_ or _super()_, the compiler will insert a no-arg call to _super()_ as the first statement in the constructor.
 - Only static variables and methods can be accessed as part of the call to _super()_ or _this()_.
 - Abstract classes have constructors, and those constructors are always called when a concrete subclass is instantiated.
 -  If your superclass does not have a no-arg constructor, then in your subclass you will not be able to use the default constructor call _super()_supplied by the compiler.

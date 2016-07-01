@@ -38,6 +38,8 @@
         static public void main(String[] args)
         public static void main(String... x)            // varargs
         static public void main(String bang_a_gong[])
+    ```
+    
 - _main()_ can be overloaded.
 
 ### Import Statements
@@ -75,13 +77,12 @@
 - _this._ always refers to the currently executing object.
 - Determining access
 
-| Visibility                                     | Public | Protected                | Default | Private |
-|------------------------------------------------|--------|--------------------------|---------|---------|
-| From the same class                            | Yes    | Yes                      | Yes     | Yes     |
-| From any class in the same package             | Yes    | Yes                      | Yes     | No      |
-| From a subclass in the same package            | Yes    | Yes                      | Yes     | No      |
-| From a subclass outside the same package       | Yes    | Yes, through inheritance | No      | No      |
-| From any nonsubclass class outside the package | Yes    | No                       | No      | No      |
+| Visibility                                                   | Public | Protected                | Default | Private |
+|--------------------------------------------------------------|--------|--------------------------|---------|---------|
+| From the same class                                          | Yes    | Yes                      | Yes     | Yes     |
+| From any class (including a subclass) in the same package    | Yes    | Yes                      | Yes     | No      |
+| From a subclass outside the same package                     | Yes    | Yes, through inheritance | No      | No      |
+| From any nonsubclass class outside the package               | Yes    | No                       | No      | No      |
 
 
 ###### Nonaccess modifiers (including strictfp, final, and abstract)
@@ -92,9 +93,9 @@
     - Argument: it can't be modified within the method.
 - _abstract_ on a...
     - Class: it can't be instantiated, only extended (subclassed). 
-    - Methods: contain no functional code or curly braces, they end in a semicolon: _public abstract void goUpHill()__;_.
+    - Method: contain no functional code or curly braces, they end in a semicolon: _public abstract void goUpHill();_.
 - _synchronized_ (only for methods).
-- _native_ (only for methods) indicates that a method is implemented in platform-dependent code, often in C.
+- _native_ (only for methods) indicates that a method is implemented in platform-dependent code, often in _C_.
 - _transient_ (only for instance variables) tells the JVM to skip (ignore) this variable when you attempt to serialize the object containing it.
 - _volatile_ (only for instance variables) tells the JVM that a thread accessing the variable must always reconcile its own private copy of the variable with the master copy in memory.
 - _static_ is used to create variables and methods that will exist independently of any instances created for the class. Can also be applied to nested classes within another class, but not within a method, and to Initialization blocks.
