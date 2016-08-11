@@ -16,18 +16,23 @@
 ### Relational Operators
 - There are 6 ( <, <=, >, =>, == and !=)
 - The "Equality" Operators
+    - Four types of things can be tested: numbers, characters, booleans, and reference variables.
     - _==_ 
         - for primitives: checks equality of the values.
         - for objects: checks reference to the same object.
+        - for enums: because there is only one object for each enum constant, it works for comparing values.
     - _.equals_
         - for objects: same as _==_, checks references.
         - for strings: overriden to return _true_ if the strings have the same value and is case sensitive.
 
 ### The _instanceof_ Comparison
 - IS-A test
+- Is for objects and thus checks the heap.
+- An object passes the instanceof test for an interface if its class or any of its superclasses implement the interface.
 
 ### Arithmetic Operators
 - Use parenthesis to force something to be evaluated first.
+- The *, /, and % operators have higher precedence than + and –.
 - Postfix and prefix increment and decrement operators.
 - The _+_ sign acts depending on the expression on its left.
 

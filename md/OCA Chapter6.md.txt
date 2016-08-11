@@ -29,7 +29,7 @@
 - Variables declared inside the _Initialization_ part only exist within the loop.
 - You can declare multiple variables in the _Initialization_ part separating them with comas, but they will all be of the same type.
 - The _Iteration_ expression runs after the body is executed.
-- None of the 3 parts are required. In case of not having any part presen, the _for_ will act like an endless loop.
+- None of the 3 parts are required. In case of not having any part present, the _for_ will act like an endless loop.
 - If only the _Condition_ expression is provided, the _for_ act like a _while_ loop.
 - You can put in virtually any arbitrary code statements that you want to happen with each iteration of the loop as the _Iteration_ expression.
 
@@ -40,6 +40,7 @@
         /* Loop body */ 
     }
     ```
+- You must declare a variable on the left hand of the semicolon.
 
 ###### _while_ loop
 - Any variables used in the expression of a while loop must be declared before the expression is evaluated. Example of a _while_ loop:
@@ -79,7 +80,7 @@
 - If you have multiple _catch_ clauses, the most generic need to be below the most specific.
 - Java's "handle or declare": Each method must either handle all checked exceptions by supplying a catch clause or list each unhandled checked exception as a thrown exception.
 - A single generic _catch_ can be used to catch multiple subtypes.
-- _RuntimeException_ are the only unchecked exceptions and it and it's decendants don´t need to be handled or declared. 
+- _RuntimeException_ are the only unchecked exceptions and it and it's decendants don´t need to be handled or declared, meaning you _can_ catch them. 
 - You can create your own exceptions, for example extending from _Exception_.
 - You sholdn´t handle an _error_, because you can rarely recover from one.
 - _Error_ and _Exception_ are inmediate children of _Throwable_, who is an inmediate child of _Object_.

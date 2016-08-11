@@ -36,6 +36,7 @@
 
 		/* sidebar */
 		.bs-docs-sidebar {
+			overflow: hidden;
 		    padding-left: 20px;
 		    margin-top: 50px;
 		    margin-bottom: 20px;
@@ -110,9 +111,9 @@
 
 	<div class="container" style="text-align: justify;">
 		<div class="row" id="guides">
-			<div class="col-md-3">	
+			<div class="col-md-3">
 				<nav class="bs-docs-sidebar">
-			        <ul id="sidebar" class="nav nav-stacked fixed"></ul>
+					<ul id="sidebar" class="nav nav-stacked fixed"></ul>
 			    </nav>
 			</div>
 			<div class="col-md-9">
@@ -185,7 +186,7 @@
 				$('#rightArrow').hide();
 			
 			new Promise(function(resolve){
-				$.get( 'md/OCA chapter' + chapter + '.md', function( data ) {
+				$.get( 'md/OCA chapter' + chapter + '.md.txt', function( data ) {
 					$('#middle').html(marked(data));
 					resolve('middle');
 				});
@@ -195,8 +196,8 @@
 		function afterLoading(id){
 				$('#sidebar').html('');
 				var h3cnt = 0;
-				$('#'+id).find('h3, h6').each( (num, entry)=>{ 
-					if( $(entry).is('h3') )
+				$('#'+id).find('h1, h3, h6').each( (num, entry)=>{ 
+					if( $(entry).is('h3') ||  $(entry).is('h1') )
 						$('#sidebar').append('<li><a href="#' + id + num +'">' + $(entry).html() +'</a><ul class="nav nav-stacked" id="' + id + (++h3cnt) + '_sub_ul"></ul></li>'); 
 					else
 						$('#' + id + h3cnt + '_sub_ul').append('<li><a href="#' + id + num +'">' + $(entry).html() +'</a></li>');

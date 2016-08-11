@@ -43,6 +43,7 @@
 - _main()_ can be overloaded.
 
 ### Import Statements
+- The most specific one will be used, regardless of the order of apparience.
 - They help you type less:
 -   ``` java
         System.out.println(Integer.MAX_VALUE);
@@ -89,7 +90,7 @@
 - _final_ on a(n)...
     - Class: it can´t be subclassed.
     - Method: it can´t be overridden in a subclass.
-    - Variable: must be assigned an explicit value by the time the constuctor finishes, it can't be assigned a new value afterwards.
+    - Variable: must be assigned an explicit value by the time the constuctor finishes and can't be assigned a new value afterwards.
     - Argument: it can't be modified within the method.
 - _abstract_ on a...
     - Class: it can't be instantiated, only extended (subclassed). 
@@ -111,7 +112,7 @@
 - All interface methods are implicitly _public_ and _abstract_. Because they are _abstract_, they cannot be _final_, _strictfp_, or _native_. They can´t be _static_ either.
 - All variables defined in an interface are implicitly _public_, _static_, and _final_ (so constants).
 - Extend: They can extend one or more other interfaces, but nothing other than an interface.
-- Implement: cannot implement another interface or class.
+- Implement: cannot implement anything.
 - They must be declared with the keyword _interface_.
 - Interface types can be used polymorphically (more on Chapter 2).
 - An abstract implementing class does not have to implement the interface methods (but the first concrete subclass must).
@@ -124,14 +125,14 @@
 ### Range of Numeric Primitives
 -  primitive types with their sizes and ranges.
 
-| Type   | Bits | Bytes | Minimum Range | Maximum Range |
-|--------|------|-------|---------------|---------------|
-| byte   | 8    | 1     | -2 x 10^7     | 2 x 10^7 - 1  |
-| short  | 16   | 2     | -2 x 10^15    | 2 x 10^15 - 1 |
-| int    | 32   | 4     | -2 x 10^31    | 2 x 10^31 - 1 |
-| long   | 64   | 8     | -2 x 10^63    | 2 x 10^63 - 1 |
-| float  | 32   | 4     | n/a           | n/a           |
-| double | 64   | 8     | n/a           | n/a           |
+| Type   | Bits | Bytes | Minimum Range                       | Maximum Range |
+|--------|------|-------|-------------------------------------|---------------|
+| byte   | 8    | 1     | -2^7 = -128                         | 2^7 - 1       |
+| short  | 16   | 2     | -2^15 = -32_768                     | 2^15 - 1      |
+| int    | 32   | 4     | -2^31 = -2_147_483_648              | 2^31 - 1      |
+| long   | 64   | 8     | -2^63 = -9_223_372_036_854_775_808  | 2^63 - 1      |
+| float  | 32   | 4     | n/a                                 | n/a           |
+| double | 64   | 8     | n/a                                 | n/a           |
 
 
 ### Enumerated Types
@@ -143,8 +144,9 @@
 - _enum_ s can be declared as their own separate class or as a class member; however, they must not be declared within a method.
 - _enum_ s declared outside a class must NOT be marked _static_, _final_, _abstract_, _protected_, or _private_.
 - It is optional to put a semicolon at the end of the enum declaration.
+- You can access _enum_ members with the dot operator.
 - Every enum has a static method: _values()_.
-- If they are declared inside a class, the enclosing name class is required when accessing it.
+- If they are declared inside a class, the enclosing class name is required when accessing it.
 - Enums are not _String_ s or _int_ s.
 - Constant specific class bodies can override enum methods defined in the _enum_.
 - ``` java

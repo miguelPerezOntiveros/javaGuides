@@ -23,13 +23,14 @@
     the string does not change, the reference variable _s_ was changed so that it would refer to a different string.
 - The JVM sets aside a special area of memory called the String constant pool. When the compiler encounters a String literal, it checks the pool. If a match is found, the existing String is used.
 - Overriding the _String_ class functionality could cause problems in the pool, so the _String_ class is marked final.
+- You can get its length through a function: .length()
 - Important Methods
     - public char charAt(int index) - Returns the character at the specified index.
     - public String concat(String s) - Returns a string with the value of the String passed in to the method appended to the end of the String used to invoke the method.
     - public boolean equalsIgnoreCase(String s) - Determines equality of 2 strings, ignoring case.
     - public int length() - Returns the number of characters in a String.
     - public String replace(char old, char new) - Replaces ocurrences od a character with a new character.
-    - public String substring(int begin) - Returns a part of a String.
+    - public String substring(int begin) - Returns a part of a String. Second argument is the end position, and it is 1-based.
     - public String toLowerCase() - Returns a string, with uppercase characters converted to lowercase.
     - public String toString() - Returns the value of a String.
     - public String toUpperCase() - Retusn a string, with ñowercase characters converted to uppercase.
@@ -45,6 +46,7 @@
 - When _append()_ ing and _insert()_ ing:
     - If an insert() attempts to start at an index after the StringBuilder's current length, an exception will be thrown.
     - If an append() or insert() grows a StringBuilder past its capacity, the capacity is updated automatically.
+- You can get its length through a function: .length()
 - Important Methods (of the following, all except _toString()_ modify the valueof the _StringBuilder_ object that invoked the call)
     - public StringBuilder append(String s)
     - public StringBuilder delete(int start, int end)
@@ -67,7 +69,7 @@
             String[] managerName [];    // legal
         ```
     - It is never legal to include the size of the array in your declaration.
-- Constructing (Instantiating, or creating the array object on the heap)
+- Constructing (Instantiating, or creating the array __object__ on the heap)
     - Only up until this point, the size of the array is needed to allocate the appropriate space on the heap for the new array object.
     - Use the keyword _new_ followed by the array type, with a bracket specifying how many elements of that type the array will hold.
         ``` java
@@ -112,6 +114,7 @@
         books[0] = aNumber;     // NO, expecting an int array not an int
         books[0] = numbers;     // OK, numbers is an int array
     ```
+- You can get its length through an attribute: .length.
 
 ### ArrayLists
 - The Java API provides classes that support common data structures such as _Lists_, _Sets_, _Maps_, and _Queues_. The classes that support these common data structures are a part of what is known as "The Collection API".
@@ -141,3 +144,4 @@
     - int size() - Returns the number of elements in the ArrayList.
 - Encapsulation
     - When encapsulating a mutable object like a StringBuilder, an array, or an ArrayList, if you want to let outside classes have a copy of the object, you must actually copy the object and return a reference variable to the object that is a copy. If you just return a copy of the original object's reference variable, you DO NOT have encapsulation.
+- You can get its length through a function: .size()
