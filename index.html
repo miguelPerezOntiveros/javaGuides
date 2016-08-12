@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 	<!-- marked -->
 	<script src="node_modules/marked/marked.min.js"></script>
@@ -92,6 +93,9 @@
 	</style>
 </head>
 <body>
+	<br>
+	<br>
+	<br>
 	 <div id="hoverable">
 		<nav class="navbar navbar-default" id="movable">
 			<div class="container-fluid">
@@ -111,13 +115,13 @@
 
 	<div class="container" style="text-align: justify;">
 		<div class="row" id="guides">
-			<div class="col-md-3">
+			<div class="col-md-9 col-sm-12">
+				<div id="middle"></div>
+			</div>
+			<div class="col-md-3 col-sm-0">
 				<nav class="bs-docs-sidebar">
 					<ul id="sidebar" class="nav nav-stacked fixed"></ul>
 			    </nav>
-			</div>
-			<div class="col-md-9">
-				<div id="middle"></div>
 			</div>
 		</div>
 	</div>
@@ -157,9 +161,6 @@
 
 		}
 
-		$('#leftArrow').click( () =>{ fillContent(--currentPage); });
-		$('#rightArrow').click( () =>{ fillContent(++currentPage); });
-
 		for(let i = 0; i < 20; i++)
 			$('#menu' + i).click( () => fillContent(currentPage = i) );
 
@@ -169,24 +170,21 @@
 		var upperLimit = 6;
 		var lowerLimit = 1;
 
-		function fillContent(chapter){
-			if(currentPage < lowerLimit)
+		function fillContent(){
+			if(currentPage < lowerLimit){
 				currentPage = lowerLimit;
-			if(currentPage > upperLimit)
+				return;
+			}
+			if(currentPage > upperLimit){
 				currentPage = upperLimit;
+				return;
+			}
 
-			 $('#top').children().each( (i, e) => { $(e).removeClass('active'); } );
-			 $('#menu'+currentPage).parent().addClass('active'); 
+			$('#top').children().each( (i, e) => { $(e).removeClass('active'); } );
+			$('#menu'+currentPage).parent().addClass('active'); 
 
-			$('#leftArrow').show();
-			$('#rightArrow').show();
-			if(currentPage == lowerLimit)
-				$('#leftArrow').hide();
-			if(currentPage == upperLimit)
-				$('#rightArrow').hide();
-			
 			new Promise(function(resolve){
-				$.get( 'md/OCA chapter' + chapter + '.md.txt', function( data ) {
+				$.get( 'md/OCA chapter' + currentPage + '.md.txt', function( data ) {
 					$('#middle').html(marked(data));
 					resolve('middle');
 				});
@@ -216,7 +214,16 @@
 				    target: '.bs-docs-sidebar',
 				    offset: 40
 				});
+
 		}
+
+		$("#guides").on("swipeleft", function(){
+			fillContent(++currentPage);
+		});
+
+		$("#guides").on("swiperight", function(){
+			fillContent(--currentPage);
+		});
 
 	</script>
 
