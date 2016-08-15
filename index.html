@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
+	<script id="posibleMobilejQuery" type="text/javascript"></script>
 
 	<!-- marked -->
 	<script src="node_modules/marked/marked.min.js"></script>
@@ -156,18 +157,18 @@
 		document.onmousemove = (event) => {
 			if(event.pageY < triggerZoneThresh && !inTriggerZone)
 			{
-				$("#hoverable").animate({marginTop: '0px'});
+				$("#hoverable").animate({marginTop: '-' + $("#hoverable").height() +'px'});
 				inTriggerZone = true;
 			}
 			if(event.pageY >= triggerZoneThresh && inTriggerZone)
 			{
-				$("#hoverable").animate({marginTop: '-' + $("#hoverable").height() +'px'});
+				$("#hoverable").animate({marginTop: '-' + $("#hoverable").height()*2 +'px'});
 
 				inTriggerZone = false;
 			}
 	    };
 
-		$("#hoverable").css({marginTop: '-' + $("#hoverable").height() +'px'});
+		$("#hoverable").css({marginTop: '-' + $("#hoverable").height()*2 +'px'});
     	
 		document.onkeydown = (e) => {
 			switch(e.keyCode)
@@ -241,16 +242,25 @@
 				});
 
 		}
+		if ($(window).width() < 992) {
+			function helper(){
+				$.mobile.loading().hide();
+				$("#guides").on("swipeleft", function(){
+					fillContent(++currentPage);
+				});
 
-		$("#guides").on("swipeleft", function(){
-			fillContent(++currentPage);
-		});
-
-		$("#guides").on("swiperight", function(){
-			fillContent(--currentPage);
-		});
-
-		$.mobile.loading().hide();
+				$("#guides").on("swiperight", function(){
+					fillContent(--currentPage);
+				});
+			}      
+			var posibleMobilejQuery = document.getElementById('posibleMobilejQuery');
+			posibleMobilejQuery.src = 'http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js';
+			posibleMobilejQuery.onreadystatechange= function () {
+			if (this.readyState == 'complete')
+				helper();
+	  		}
+			posibleMobilejQuery.onload = helper;
+	   }
 	</script>
 
 	<!-- Github Buttons -->
