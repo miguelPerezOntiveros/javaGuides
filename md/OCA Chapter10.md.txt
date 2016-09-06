@@ -1,0 +1,11 @@
+# Chapter 10: Advanced OO and Design Patterns
+
+### Coupling and Cohesion
+
+### Design patterns
+
+###### Singleton (eager, lazy y en enum)
+
+###### DAO
+
+###### Factory

@@ -1,0 +1,25 @@
+# Chapter 12: Inner Classes
+
+### 'top-level nested class' (an inner class marked static)
+
+### Inner Classes
+
+- one of the key benefits of an inner class is the "special relationship" an inner class instance shares with an instance of the outer class. That "special relationship" gives code in the inner class access to members of the enclosing (outer) class, as if the inner class were part of the outer class
+ - An inner class instance has access to all members of the outer class, even those marked private.
+
+###### Compiling
+- Source
+	- class MyOuter { class MyInner { } } 
+- Command
+	- javac MyOuter.java
+- Result
+	- MyOuter.class
+	- MyOuter$MyInner.class
+- But you cannot 
+	- java MyOuter$MyInner
+
+### Method-Local Inner Classes
+
+### Anonymous Inner Classes
+
+### Static Nested Classes

@@ -1,0 +1,33 @@
+# Chapter 8: String Processing, Data Formatting and Resource Bundles
+
+### Dates, Numbers, Currencies and Locales
+
+###### java.util.Date
+- is here for legacy purposes
+- if you want to create an instance of Date to represent "now," you use Date's no-argument constructor:
+- .getTime() and .setTime()
+
+###### java.util.Calendar
+- it is an abstract class. You have to use one of the overloaded getInstance() static factory methods. java.util.GregorianCalendar is what you'll almost certainly get.
+- Days of the week: 'Calendar.SUNDAY'.
+- c.getFirstDayOfWeek() lets you know what the first day of the week is, it may or may not be Sunday. In some locales, MONDAY is the first day of the week.
+- c.get(Calendar.DAY_OF_WEEK)); lets you get the day of the week c is.
+- Calendar's add() method lets you add or substract time. c.add(Calendar.HOUR, -4);.
+- to convert a calendar back to a date: Date d2 = c.getTime();.
+- The other Calendar method you should know for the exam is the roll() method. The roll() method acts like the add() method, except that when a part of a Date gets incremented or decremented, larger parts of the Date will not get incremented or decremented.
+
+###### java.util.DateFormat
+- --TODO--
+
+###### java.util.NumberFormat
+- --TODO--
+
+###### java.util.Locale
+- requiered for date or number formating in a specific locale.
+- --TODO--
+
+### Parsing,Tokenizing, and Formatting
+- --TODO--
+
+### Resource Bundles
+- --TODO--
