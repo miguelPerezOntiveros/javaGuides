@@ -4,6 +4,19 @@ Click here to: ***[ONLINE DEMO](http://miguelp.com/javaGuides)***.
 
 ![alt tag](screenshot.png)
 
+### To Do:
+- make menus dynamic
+- be able to share links (include the current chapter in the section name)
+- Chap 7 is at 0%
+- Chap 8 is at 25%
+- Chap 9 is at 0%
+- Chap 10 is at 3%
+- Chap 11 is at 0%
+- Chap 12 is at 3%
+- Chap 13 is at 0%
+- Chap 14 is at 0%
+- Chap 15 is at 0%
+
 ### Credits
 
 The markdown files of this project were inspired by Kathy Sierra's and Bert Bates' book "OCA/OCP Java SE 7 Programmer I & II Study Guide".
