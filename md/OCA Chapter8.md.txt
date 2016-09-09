@@ -3,57 +3,166 @@
 ### Dates, Numbers, Currencies and Locales
 
 ###### java.util.Date
-- is here for legacy purposes
-- if you want to create an instance of Date to represent "now," you use Date's no-argument constructor:
-- .getTime() and .setTime()
+- _new Date()_ creates an instance of _Date_ representing the current moment.
+- You can use _Date.getTime()_ and _Date.setTime()_.
 
 ###### java.util.Calendar
-- it is an abstract class. You have to use one of the overloaded getInstance() static factory methods. java.util.GregorianCalendar is what you'll almost certainly get.
-- Days of the week: 'Calendar.SUNDAY'.
-- c.getFirstDayOfWeek() lets you know what the first day of the week is, it may or may not be Sunday. In some locales, MONDAY is the first day of the week.
-- c.get(Calendar.DAY_OF_WEEK)); lets you get the day of the week c is.
-- Calendar's add() method lets you add or substract time. c.add(Calendar.HOUR, -4);.
-- to convert a calendar back to a date: Date d2 = c.getTime();.
-- The other Calendar method you should know for the exam is the roll() method. The roll() method acts like the add() method, except that when a part of a Date gets incremented or decremented, larger parts of the Date will not get incremented or decremented.
+- Is an abstract class, so you have to use one of the overloaded getInstance() static factory methods. _java.util.GregorianCalendar_ is what you'll almost certainly get.
+- Days of the week are for example: _Calendar.SUNDAY_.
+- To know what the first day of the week is. Typically, _SUNDAY_ or _MONDAY_:
+	```java
+	c.getFirstDayOfWeek()
+	```
+- To get the day of the week.
+	```java
+	c.get(Calendar.DAY_OF_WEEK))
+	```
+- Calendar's _add()_ method lets you add or substract time
+	```java
+	c.add(Calendar.HOUR, -4)
+	```
+- To convert a calendar to a date:
+	```java
+	Date d2 = c.getTime();
+	```
+- The roll() method acts like the add() method, except there is no carry.
 
 ###### java.util.DateFormat
-- --TODO--
+- _DateFormat_ is another factory class, we use its static fields to customize our various instances of it.
+	```java
+	import java.text.*;
+	import java.util.*;
+		class Dates3 {
+			public static void main(String[] args) {
+				Date d1 = new Date(1_000_000_000_000L);
+				DateFormat[] dfa = new DateFormat[6];
+				dfa[0] = DateFormat.getInstance();
+				dfa[1] = DateFormat.getDateInstance();
+				dfa[2] = DateFormat.getDateInstance(DateFormat.SHORT);
+				dfa[3] = DateFormat.getDateInstance(DateFormat.MEDIUM);
+				dfa[4] = DateFormat.getDateInstance(DateFormat.LONG);
+				dfa[5] = DateFormat.getDateInstance(DateFormat.FULL);
+				for(DateFormat df : dfa)
+					System.out.println(df.format(d1));
+	} }
+	```
+-	You can parse a _String_ to a _Date_
+	```java
+	try {
+         Date d2 = df.parse(s);
+         System.out.println("parsed = " + d2.toString());
+    } catch (ParseException pe) {
+    	System.out.println("parse exc"); 
+    }
+	```
 
 ###### java.util.NumberFormat
-- --TODO--
+- _NumberFormat_ is also abstract.
+	```java
+	float f1 = 123.4567f;
+	Locale locFR = new Locale("fr");          // France
+	NumberFormat[] nfa = new NumberFormat[4];
+	nfa[0] = NumberFormat.getInstance();
+	nfa[1] = NumberFormat.getInstance(locFR);
+	nfa[2] = NumberFormat.getCurrencyInstance();
+	nfa[3] = NumberFormat.getCurrencyInstance(locFR);
+	for(NumberFormat nf : nfa)
+		System.out.println(nf.format(f1));
+	```
+	```java
+	float f1 = 123.45678f;
+	NumberFormat nf = NumberFormat.getInstance();
+	System.out.print(nf.getMaximumFractionDigits() + " ");
+	System.out.print(nf.format(f1) + "  ");
+	nf.setMaximumFractionDigits(5);
+	System.out.println(nf.format(f1) + "  ");
+	try {
+		System.out.println(nf.parse("1234.567"));
+		nf.setParseIntegerOnly(true);
+		System.out.println(nf.parse("1234.567"));
+	} catch (ParseException pe) {
+		System.out.println("parse exc");
+	}
+	```
 
 ###### java.util.Locale
-- requiered for date or number formating in a specific locale.
-- --TODO--
+- Is requiered for date or number formating in a specific locale.
+- A locale is "a specific geographical, political, or cultural region."
+- Local constructors
+	```java
+	Locale(String language)
+	```
+	```java
+	Locale(String language, String country)
+	```
+	```java
+	Calendar c = Calendar.getInstance();
+	c.set(2010, 11, 14);                    // December 14, 2010
+	                                       // (month is 0-based)
+	Date d2 = c.getTime();
+	Locale locIT = new Locale("it", "IT");  // Italy
+	Locale locPT = new Locale("pt");        // Portugal
+	Locale locBR = new Locale("pt", "BR");  // Brazil
+	Locale locIN = new Locale("hi", "IN");  // India
+	Locale locJA = new Locale("ja");        // Japan
+	DateFormat dfUS = DateFormat.getInstance();
+	System.out.println("US       " + dfUS.format(d2));
+	DateFormat dfUSfull = DateFormat.getDateInstance(
+	                                       DateFormat.FULL);
+	System.out.println("US full  " + dfUSfull.format(d2));
+	DateFormat dfIT = DateFormat.getDateInstance(
+	                                       DateFormat.FULL, locIT);
+	System.out.println("Italy    " + dfIT.format(d2));
 
-### Parsing,Tokenizing, and Formatting
+	DateFormat dfPT = DateFormat.getDateInstance(
+	                                    DateFormat.FULL, locPT);
+	System.out.println("Portugal " + dfPT.format(d2));
+	DateFormat dfBR = DateFormat.getDateInstance(
+	                                    DateFormat.FULL, locBR);
+	System.out.println("Brazil   " + dfBR.format(d2));
+	DateFormat dfIN = DateFormat.getDateInstance(
+	                                    DateFormat.FULL, locIN);
+	System.out.println("India    " + dfIN.format(d2));
+	DateFormat dfJA = DateFormat.getDateInstance(
+	                                    DateFormat.FULL, locJA);
+	System.out.println("Japan    " + dfJA.format(d2));
+	```
+	```java
+	Locale locBR = new Locale("pt", "BR");  // Brazil
+	Locale locDK = new Locale("da", "DK");  // Denmark
+	Locale locIT = new Locale("it", "IT");  // Italy
+	System.out.println("def " + locBR.getDisplayCountry());
+	System.out.println("loc " + locBR.getDisplayCountry(locBR));
+	System.out.println("def " + locDK.getDisplayLanguage());
+	System.out.println("loc " + locDK.getDisplayLanguage(locDK));
+	System.out.println("D>I " + locDK.getDisplayLanguage(locIT));
+	```
+
+### Parsing, Tokenizing, and Formatting
 
 ##### Finding stuff
 - We will use _java.util.regex.Pattern_ and _java.util.regex.Matcher_
 - Regular expressions (regex for short) are a kind of language (It's fair to think of regex as a language) within a language, designed to help programmers with these searching tasks. 
-- Example: searching _ab_ in _abaaaba_, regex engine,  would reply by telling us that it found matches at positions 0 and 4.
-source: abababa
-index:  0123456
-expression: aba
- 0 and another starting at position 4. But how about starting at position 2? In general in the world of regex, the aba string that starts at position 2 will not be considered a valid occurrence. t the first three characters of the source were consumed. 
- In general, a regex search runs from left to right, and once a source's character has been used in a match, it cannot be reused.
-
-de la pag 482 
-import java.util.regex.*;
-class RegTest {
-  public static void main(String [] args) {
-    Pattern p = Pattern.compile(args[0]);
-    Matcher m = p.matcher(args[1]);
-    System.out.println("\nsource: " + args[1]);
-    System.out.println(" index: 01234567890123456\n");  // the index
-    System.out.println("expression: " + m.pattern());
-    System.out.print("match positions: ");
-    while(m.find()) {
-      System.out.print(m.start() + " ");
-    }
-    System.out.println("");
-  }
-}
+- Regex tester:
+    ```java
+	import java.util.regex.*;
+	class RegTest {
+	  public static void main(String [] args) {
+	    Pattern p = Pattern.compile(args[0]);
+	    Matcher m = p.matcher(args[1]);
+	    System.out.println("\nsource: " + args[1]);
+	    System.out.println(" index: 01234567890123456\n");  // the index
+	    System.out.println("expression: " + m.pattern());
+	    System.out.print("match positions: ");
+	    while(m.find()) {
+	      System.out.print(m.start() + " ");
+	    }
+	    System.out.println("");
+	  }
+	}
+    ```
+- Looking for _aba_ in _abababa_, 0 and 4 is returned, but not 2 because the first three characters of the source were consumed. 
+- In general, a regex search runs from left to right, and once a source's character has been used in a match, it cannot be reused.
 
 ##### Search using Metacharacters
 - \d
@@ -88,7 +197,7 @@ class RegTest {
 	source: "a 1 56 _Z"
 	index:   012345678
 	pattern: \w
-	regex will return positions 0, 2, 4, 5, 7, and 8
+	regex will return positions 0, 2, 4, 5, 7, and 8.
 
 	source: #ab de#
 	index: 01234567890123456
@@ -125,7 +234,7 @@ to specify the intersection of sets.While these constructs are not on the exam, 
 
 ##### Groups 
 
-- * Zero or more occurrences
+- \* Zero or more occurrences
 - ? Zero or one occurrence
 
 - to separate proyects:
@@ -135,7 +244,7 @@ to specify the intersection of sets.While these constructs are not on the exam, 
 	25 proj1
 	37 proj1.java
 
-- to find phone numbers:
+- Finding phone numbers:
 	1234567
 	123 4567
 	123-4567
@@ -143,37 +252,169 @@ to specify the intersection of sets.While these constructs are not on the exam, 
 	\d\d\d([-\s])?\d\d\d\d
 
 ##### Greedy Quantifiers
-- When you use the *, +, and ? quantifiers, you can fine-tune them a bit to produce behavior that's known as 
+- Quantifiers can be 
 	- "greedy,"
 	- "reluctant,"
 	- "possessive."
-- -to do-
+- ? is greedy, ?? is reluctant, for zero or once
+- * is greedy, *? is reluctant, for zero or more
+- + is greedy, +? is reluctant, for one or more
 
-##### When Metacharacters and Strings Collide
-- -to do-
+source:  yyxxxyxx
+pattern:  .*xx
+0 yyxxxyxx
+
+source:  yyxxxyxx
+pattern:  .*?xx
+0 yyxx
+4 xyxx
+
+##### Metacharacters in Strings
+- "\d" for example, does not compile, the \d escape sequence does not exist. Use "\\d"
+- similarly, if you want the regex engine to see a dot and not the dot metacharacter, use "\\." in java code. "\." would not compile.
 
 ##### Locating Data via Pattern Matching
-- -to do-
+- The Pattern class is used to hold a representation of a regex expression so that it can be used and reused by instances of the Matcher class, to invoke the regex engine.
+	```java
+	import java.util.regex.*;
+	   class Regex {
+	     public static void main(String [] args) {
+	       Pattern p = Pattern.compile(args[0]);
+	       Matcher m = p.matcher(args[1]);
+	       System.out.println("Pattern is " + m.pattern());
+	       while(m.find()) {
+	         System.out.println(m.start() + " " + m.group());
+	       }
+	} }
+	```
+
+	The find() method returns true if it gets a match and remembers the start position of the match. If find() returns true, you can call the start() method to get the starting position of the match, and you can call the group() method to get the string that represents the actual bit of source data that was matched.
+- m.end() also exists.
+	java Regex "a?" "aba"
+	should produce something very similar to this:
+	Pattern is a? 01 a
+	11
+	23 a
+	33
+- Zero length matches can occur in several places:
+	- After the last character of source data (the 3 3 example)
+	- In between characters after a match has been found (the 1 1 example)
+	- At the beginning of source data (try java Regex "a?" "baba")
+	- At the beginning of zero-length source data
 
 ##### Searching Using the Scanner Class
-- -to do-
+- 
+import java.util.*;
+                  class ScanIn {
+                    public static void main(String[] args) {
+                      System.out.print("input: ");
+                      System.out.flush();
+                      try {
+                        Scanner s = new Scanner(System.in);
+                        String token;
+                        do {
+                          token = s.findInLine(args[0]);
+                          System.out.println("found " + token);
+                        } while (token != null);
+                      } catch (Exception e) { System.out.println("scan exc"); }
+                    }
+}
+The invocation and input
+                  java ScanIn "\d\d"
+                  input: 1b2c335f456
+produce the following:
+                  found 33
+                  found 45
+                  found null
 
 ##### Tokenizing stuff
-- String.split()
-	- -to do-
-- java.util.Scanner
-	- -to do-
-- java.util.StringTokenizer
+- Probably the most common tokenizing situation is reading a delimited file in order to get the contents of the file moved into useful places, like objects, arrays, or collections.
+- The data starts out composed of two things: tokens(actual pieces of data) and delimiters(separate the tokens from each other).
+- Delimiters can be anything that qualifies as a regex expression.
+
+source: "ab,cd5b,6x,z4"
+With comma delimiter: ab cd5b 6x z4
+With  \d: ab,cd b, x,z
+
+- we are left with the tokens, no delimeters.
+
+##### _String.split()_
+	-  It takes a regex expression as its argument and returns a _String_ array populated with the resulting tokens.
+	```java
+	import java.util.*;
+	   class SplitTest {
+	     public static void main(String[] args) {
+	       String[] tokens = args[0].split(args[1]);
+	       System.out.println("count " + tokens.length);
+	       for(String s : tokens)
+	         System.out.println(">" + s + "<");
+	     }
+	}
+	```
+- You can´t look at tokens as they are produced.
+
+##### java.util.Scanner
+- Scanners can be constructed using files, streams, or strings as a source.
+- Tokenizing is performed within a loop so that you can exit the process at
+any point.
+- Tokens can be converted to their appropriate primitive types automatically.
+- -to do-
+
+##### java.util.StringTokenizer
 	- -to do-
 
 ##### Formating stuff
 - java.util.Formatter
+- -to do-
+
 - printf() and format()
 
 ### Resource Bundles
-- Property Resource Bundles
-	- -to do-
-- Java Resource Bundles
-	- -to do-
-- Default Locale
+- Using a resource bundle has three steps: obtaining the Locale, getting the ResourceBundle, and looking up a value from the resource bundle. First, we create a Locale object.
+Labels_en.properties
+	hello=Hello Java!
+Labels_fr.properties
+	hello=Bonjour Java!
+WhichLanguage.java
+	import java.util.Locale;
+	import java.util.ResourceBundle;
+	public class WhichLanguage {
+		public static void main(String[] args) {
+			Locale locale = new Locale(args[0]);
+			ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
+			System.out.println(rb.getString("hello"));
+		}
+	}
+Running the code:
+   java WhichLanguage en
+   java WhichLanguage fr
+
+##### Property Resource Bundles
+	- Aside from comments, a property file contains key/value pairs:
+    ```java
+	# this file contains a single key/value
+	hello=Hello Java
+	```
+	- If you want to break up a single line into multiple lines, you use a backslash.
+	- Java helpfully ignores any whitespace before subsequent lines of a multiline property so you can indentate.
+	- If you actually want a line break, you use the standard Java \n escape sequence.
+	- alternative syntaxes use ! to comment and : or a space to assign a value.
+##### Java Resource Bundles
+	- Used to go beyond simple property file key to string value mappings, for example to read from a database.
+	- We write Java classes that extend _ListResourceBundle_, and implement
+	 protected Object[][] getContents(). The inner array is key/value pairs.
+
+ import java.util.ListResourceBundle;
+                  public class Labels_en_CA extends ListResourceBundle {
+                    protected Object[][] getContents() {
+                      return new Object[][] {
+                         { "hello", new StringBuilder("from Java") }
+                       };
+} }
+
+	  Locale locale = new Locale(args[0], "CA");
+                  ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
+                  System. out.println(rb.getObject("hello"));
+
+##### Default Locale
 	- -to do-

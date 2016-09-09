@@ -18,6 +18,40 @@
 - But you cannot 
 	- java MyOuter$MyInner
 
+### Regular Inner Classes
+- The term _regular_ will be used to represent inner classes that are not _Static_, _Method-local_ or _Anonymous_.
+- A regular inner class cannot have static declarations of any kind.
+- To create an instance of an inner class, you must have an instance of the outer class to tie to the inner class.
+
+##### Creating an Inner Class Object
+- Creating it from inside  the Outside Class is simple, just write the code inside the Outside Class brackets.
+- From the Outside:
+    ```java
+	public static void main(String[] args) {
+		MyOuter mo = new MyOuter(); // gotta get an instance!
+		MyOuter.MyInner inner = mo.new MyInner(); inner.seeOuter();
+	}
+    ```
+-  Instantiating an inner class is the only scenario in which you'll invoke new on an instance as opposed to invoking new to construct an instance.
+
+##### Referencing from within the Inner Class
+- _this_ normally:
+	- The keyword this can be used only from within instance code. In other words, not within static code.
+	- The _this_ reference is a reference to the currently executing object.
+	- The _this_ reference is the way an object can pass a reference to itself as an argument.
+- As expected, from an inner class, _this_ references the Inner Class.
+- To reference the outer class instance, use _NameOfOuterClass.this_.
+
+##### Aplicable members
+- A regular inner class is a member of the outer class just as instance variables and methods are, so the following modifiers can be applied to an inner class:
+	- final
+	- abstract
+	- public
+	- private
+	- protected
+	- static (turns it into a static nested class, not an inner class)
+	- strictfp
+
 ### Method-Local Inner Classes
 
 ### Anonymous Inner Classes
