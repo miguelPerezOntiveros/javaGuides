@@ -1,6 +1,22 @@
 # Chapter 10: Advanced OO and Design Patterns
 
 ### Coupling and Cohesion
+- Good OO design calls for loose coupling and high cohesion.
+- This facilitates:
+	- Ease of creation
+	- Ease of maintenance
+	- Ease of maintenance
+
+###### Coupling
+- Coupling is the degree to which one class knows about another class.
+- If the only knowledge that class A has about class B is what class B has exposed through its interface, then class A and class B are said to be loosely coupled.
+- If class A knows non-API stuff about class B, and class B knows non-API stuff about class A, then when either class is changed, there's a chance that the other class will break.
+
+###### Cohesion
+- Refers to the degree to which a class has a single, well-focused purpose.
+- Classes are typically much easier to maintain.
+- Classes tend to be more reusable.
+- 
 
 ### Design patterns
 
