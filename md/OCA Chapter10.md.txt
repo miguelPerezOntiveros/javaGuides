@@ -1,11 +1,7 @@
 # Chapter 10: Advanced OO and Design Patterns
 
 ### Coupling and Cohesion
-- Good OO design calls for loose coupling and high cohesion.
-- This facilitates:
-	- Ease of creation
-	- Ease of maintenance
-	- Ease of maintenance
+- Good OO design calls for loose coupling and high cohesion. This facilitates creation, maintenance and enhancement of classes.
 
 ###### Coupling
 - Coupling is the degree to which one class knows about another class.
@@ -14,14 +10,157 @@
 
 ###### Cohesion
 - Refers to the degree to which a class has a single, well-focused purpose.
-- Classes are typically much easier to maintain.
-- Classes tend to be more reusable.
-- 
+- Classes are typically much easier to maintain and more reusable.
+
+### Object Composition
+- Object composition refers to one object having another as an instance variable (HAS-A) as well as being (IS-A).
+	```java
+	public class MailerBox implements Box, Mailer { private Box box;
+		public MailerBox(Box box) {		// pass in a Box
+		    this.box = box;				
+		}
+		public void pack() {			// from Box
+			box.pack();					// delegate to box
+		}
+		public void seal() {			// from Box
+			box.seal();					// delegate to box
+		}
+		public void addPostage() {		// from Mailer
+		    System.out.println("affix stamps");
+		}
+		public void ship() { 			// from Mailer
+			System.out.println("put in mailbox");
+		}
+	}
+	```
+- An object can delegate to another object rather than repeating the same code.
+- Prevents a proliferation of subclasses. We can have one class per functionality rather than needing one for every combination of functionalities.
 
 ### Design patterns
+- A design pattern is a general reusable solution to a commonly occurring problem within a given context. It is an idea, not code.
+- Benefits
+	- We get to use a solution that is known to work.
+	- The tradeoffs, if any, are well documented.
+	- Design patterns also serve as a communication aid.
 
-###### Singleton (eager, lazy y en enum)
+###### Singleton (eager, lazy and with enums)
+- Key parts
+	- A private static variable to store the single instance called the singleton. This variable is usually final to keep developers from accidentally changing it.
+	- A public static method for callers to get a reference to the instance.
+	- A private constructor so no callers can instantiate the object directly.
+- Eager initialization:
+	```java
+	import java.util.*;
+	public class Show {
+		private static final Show INSTANCE = new Show();	// store one instance (this is the singleton)
+		private Set<String> availableSeats;
+		public static Show getInstance() {					// callers can get to
+			return INSTANCE;								// the instance
+		}
+		private Show() { 									// callers can't create directly anymore. Must use getInstance()
+			availableSeats = new HashSet<String>();
+			availableSeats.add("1A");
+			availableSeats.add("1B");
+		}
+		public boolean bookSeat(String seat) {
+			return availableSeats.remove(seat);
+		}
+		public static void main(String[] args) {
+			ticketAgentBooks("1A");
+			ticketAgentBooks("1A");
+		}
+		private static void ticketAgentBooks(String seat) {
+			Show show = Show.getInstance();
+			System.out.println(show.bookSeat(seat));
+		}
+	}
+	```
+- If the constructor weren't private, we wouldn't have a singleton. Callers would be free to ignore getInstance() and instantiate their own instances. Which would leave us with multiple instances in the program and defeat the purpose entirely.
+- If getInstance() weren't public, we would still have a singleton. However, it wouldn't be as useful because only static methods of the class would be able to use the singleton.
+- If getInstance() weren't static, we'd have a bigger problem. Callers couldn't instantiate the class directly, which means they wouldn't be able to call getInstance() at all.
+- If INSTANCE weren't static and final, we could have multiple instances at different points in time. These keywords signal that we assign the field once and it stays that way for the life of the program.
+- Lazy initialization:
+	```java
+	private static Show INSTANCE;
+	private Set<String> availableSeats;
+	public static Show getInstance() {
+		if (INSTANCE == null) {
+		 INSTANCE = new Show();
+		}
+		return INSTANCE;
+	}
+	```
+	Note: This NOT thread-safe. If getInstance() were running at the exact same time, it would be possible for both of them to see that INSTANCE was null and create a new Show at the same time. One solution is adding _synchronized_ to the _getInstance()_ method. Look up "double checked locked pattern" for another solution.
+- Singleton using _enum_
+	```java
+	public enum ShowEnum {       				// this is an enum instead of a class
+	    INSTANCE;                           
+	    private Set<String> availableSeats;
+	    private ShowEnum() {
+	      availableSeats = new HashSet<String>();
+	      availableSeats.add("1A");
+	      availableSeats.add("1B");
+	    }
+	    public boolean bookSeat(String seat) {
+			return availableSeats.remove(seat);
+	    }
+	    public static void main(String[] args) {
+			ticketAgentBooks("1A");
+			ticketAgentBooks("1A");
+		}
+	    private static void ticketAgentBooks(String seat) {
+			ShowEnum show = ShowEnum.INSTANCE;  // we don't even need a method to get the instance
+			System.out.println(show.bookSeat(seat));
+		} 
+	}
+	```
 
 ###### DAO
+- A DAO (Data Access Object) is only responsible for storing data, for nothing else.
+- Since dealing with a database is very common, separating out that responsibility is a pattern.
+- The main object is cohesive and doesn't have database code cluttering it up.
+- All the database code is in one part of the program, making it easy to find.
+- We can change the database implementation without changing the business
+object.
+- Reuse is easier. As the database code grows, we can create helper classes and even helper superclasses.
 
 ###### Factory
+- 
+	```java
+	- The factory design pattern creates new objects.
+
+	 public abstract class Factory {
+	    public abstract BookDao createDao();
+	  }
+	  public class FactoryImpl extends Factory {
+	    public BookDao createDao() {           // right now, we only
+	      return new InMemoryBookDao();        // have one DAO
+	} }
+	  public class Student {
+	    public static void main(String[] args) {
+	      Factory factory = new FactoryImpl();
+	      BookDao dao = factory.createDao();   // create the DAO
+	      // work with dao
+	} }
+	```
+	```java
+	public abstract class Factory {
+		public BookDao createDao() {
+			if (Util.isTestMode()) {
+				return new InMemoryBookDao();
+			} else {
+				return createDatabaseBookDao();
+			}
+			protected abstract BookDao createDatabaseBookDao();
+		}
+	}
+	public class FactoryImpl extends Factory {
+		protected BookDao createDatabaseBookDao() {
+			return new OracleBookDao();
+		}
+	}
+	```
+- Object constructors need not be private, you can let people use them directly (without the factories).
+- The caller doesn't change when the factory returns different subclasses.
+- Centralizes creation logic outside the calling class. This prevents duplication and makes the code more cohesive.
+

@@ -8,13 +8,13 @@
 - A Date is the number of milliseconds since January 1, 1970, stored in a long.
 
 ###### java.util.Calendar
-- Is an abstract class, so you have to use one of the overloaded getInstance() static factory methods. _java.util.GregorianCalendar_ is what you'll almost certainly get.
+- Is an abstract class, so you have to use one of the overloaded _getInstance()_ static factory methods. _java.util.GregorianCalendar_ is what you'll almost certainly get.
 - Days of the week are for example: _Calendar.SUNDAY_.
 - To know what the first day of the week is. Typically, _SUNDAY_ or _MONDAY_:
 	```java
 	c.getFirstDayOfWeek()
 	```
-- To get the day of the week.
+- To get the day of the week:
 	```java
 	c.get(Calendar.DAY_OF_WEEK))
 	```
@@ -22,42 +22,38 @@
 	```java
 	c.add(Calendar.HOUR, -4)
 	```
+- The roll() method acts like the add() method, except there is no carry.
 - To convert a calendar to a date:
 	```java
 	Date d2 = c.getTime();
 	```
-- The roll() method acts like the add() method, except there is no carry.
 
-###### java.util.DateFormat
+###### java.text.DateFormat
 - _DateFormat_ is another factory class, we use its static fields to customize our various instances of it.
 	```java
-	import java.text.*;
-	import java.util.*;
-		class Dates3 {
-			public static void main(String[] args) {
-				Date d1 = new Date(1_000_000_000_000L);
-				DateFormat[] dfa = new DateFormat[6];
-				dfa[0] = DateFormat.getInstance();
-				dfa[1] = DateFormat.getDateInstance();
-				dfa[2] = DateFormat.getDateInstance(DateFormat.SHORT);
-				dfa[3] = DateFormat.getDateInstance(DateFormat.MEDIUM);
-				dfa[4] = DateFormat.getDateInstance(DateFormat.LONG);
-				dfa[5] = DateFormat.getDateInstance(DateFormat.FULL);
-				for(DateFormat df : dfa)
-					System.out.println(df.format(d1));
-	} }
+	Date d1 = new Date(1_000_000_000_000L);
+	DateFormat[] dfa = new DateFormat[6];
+	dfa[0] = DateFormat.getInstance();
+	dfa[1] = DateFormat.getDateInstance();
+	dfa[2] = DateFormat.getDateInstance(DateFormat.SHORT);
+	dfa[3] = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	dfa[4] = DateFormat.getDateInstance(DateFormat.LONG);
+	dfa[5] = DateFormat.getDateInstance(DateFormat.FULL);
+	for(DateFormat df : dfa)
+		System.out.println(df.format(d1));
 	```
 -	You can parse a _String_ to a _Date_
 	```java
+	DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 	try {
-         Date d2 = df.parse(s);
-         System.out.println("parsed = " + d2.toString());
-    } catch (ParseException pe) {
-    	System.out.println("parse exc"); 
-    }
+		Date d2 = df.parse("9/8/01");
+		System.out.println("parsed = " + d2.toString());
+	} catch (ParseException pe) {
+		System.out.println("parse exc"); 
+	}
 	```
 
-###### java.util.NumberFormat
+###### java.text.NumberFormat
 - _NumberFormat_ is also abstract.
 	```java
 	float f1 = 123.4567f;
@@ -88,14 +84,11 @@
 
 ###### java.util.Locale
 - Is requiered for date or number formating in a specific locale.
-- A locale is "a specific geographical, political, or cultural region."
-- Local constructors
-	```java
-	Locale(String language)
-	```
-	```java
-	Locale(String language, String country)
-	```
+- A locale is a specific geographical, political, or cultural region.
+- Locale constructors
+	- Locale(String language)
+	- Locale(String language, String country)
+- 
 	```java
 	Calendar c = Calendar.getInstance();
 	c.set(2010, 11, 14);                    // December 14, 2010
@@ -141,7 +134,7 @@
 
 ### Parsing
 - We will use _java.util.regex.Pattern_ and _java.util.regex.Matcher_
-- Regular expressions (regex for short) are a kind of language (It's fair to think of regex as a language) within a language, designed to help programmers with these searching tasks. 
+- Regular expressions (regex for short) are a kind of language (It's fair to think of regex as a language) within a language, designed to help programmers with searching tasks. 
 - Regex tester:
     ```java
 	import java.util.regex.*;

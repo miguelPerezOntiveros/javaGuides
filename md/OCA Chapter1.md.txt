@@ -3,7 +3,7 @@
 ### Identifiers and Keywords
 
 ###### Legal Identifiers
-- Must start with a letter, currency character or connecting character. May contain numbers after that.
+- Must start with a letter, currency character or connecting character ('_', '‿', '⁀', '⁔', '︳', '︴', '﹍', '﹎', '﹏', '＿'). May contain numbers after that.
 - Length is not limited.
 - Must not be a Java keyword.
 - They are case-sensitive.
@@ -74,7 +74,7 @@
 ### Modifiers
 
 ###### Access modifiers for classes and members
-- Cannot be applied to local variables, only _final_ can.
+- Cannot be applied to local variables, (only _final_ can).
 - _this._ always refers to the currently executing object.
 - Determining access
 
