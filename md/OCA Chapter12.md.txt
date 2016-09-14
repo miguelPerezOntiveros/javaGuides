@@ -1,7 +1,5 @@
 # Chapter 12: Inner Classes
 
-### 'top-level nested class' (an inner class marked static)
-
 ### Inner Classes
 
 - one of the key benefits of an inner class is the "special relationship" an inner class instance shares with an instance of the outer class. That "special relationship" gives code in the inner class access to members of the enclosing (outer) class, as if the inner class were part of the outer class
@@ -58,17 +56,85 @@
 - The method-local inner class object can access the enclosing (outer) class object's private (or any other) members. 
 - However, the inner class object cannot use the local variables of the method the inner class is in (Because the local variables aren't guaranteed to be alive as long as the method-local inner class object is), unless the local variables are marked final.
 -  The same rules apply to method-local inner classes as to local variable declarations. You can't, for example, mark a method-local inner class public, private, protected, static, transient, and the like. For the purpose of the exam, the only modifiers you can apply to a method-local inner class are abstract and final, but, as always, never both at the same time.
-
-
-Remember that a local class declared in a static method has access
-to only static members of the enclosing class, since there is no associated instance of the enclosing class. If you're in a static method, there is no this, so an inner class in a static method is subject to the same restrictions as the static method. In other words, no access to instance variables.
+- You can't apply an access modifier the way you can with a regular inner class
+- A local class declared in a static method has access to only static members of the enclosing class, since there is no associated instance of the enclosing class. If you're in a static method, there is no _this_, so an inner class in a static method does not have access to instance variables.
 
 ### Anonymous Inner Classes
 - Inner classes declared without any class name at all.
 - You can define these classes within a method, or within an argument to a method.
-- page 742
 
-- -to do-
+###### Anonymous subclass of a class
+- 
+	```java
+	class Popcorn {
+		public void pop() {
+			System.out.println("popcorn");
+		}
+	}
+	class Food {
+		// p is a Popcorn reference to an instance of an unnamed class, which is a subclass of Popcorn, it's pop method has been overriden.
+		Popcorn p = new Popcorn() {
+			public void pop() {
+				System.out.println("anonymous popcorn");
+			}
+		}; // please notice this semicolon.
+	}
+	```
+- Polymorfism is takin place. You can only call methods on an anonymous inner class reference that are defined in the reference variable type.
+
+###### Anonymous subclass of a class
+- 
+	```java
+	interface Cookable {
+		public void cook();
+	}
+	class Food {
+		Cookable c = new Cookable() {
+			public void cook() {
+				System.out.println("anonymous cookable implementer");
+			}
+		};
+	}
+	```
+- this is the only time you could use the syntax 'new Cookable()', where Cookable is an interface.
+- Anonymous interface implementers can implement only one interface. It can't even extend a class and implement an interface (directly) at the same time. 
+
+###### Argument-De ned Anonymous Inner Classes
+-	
+	```java
+	class MyWonderfulClass {
+		void go() {
+			Bar b = new Bar();
+			b.doStuff(new Foo() {
+				public void foof() {
+					System.out.println("foofy");
+				} // end foof method
+			});
+		}
+	}
+	interface Foo {
+		void foof();
+	}
+	class Bar {
+		void doStuff(Foo f) { }
+	}
+	```
 
 ### Static Nested Classes
-- -to do-
+	- Just as a static method does not have access to the instance variables and nonstatic methods of the class, a static nested class does not have access to the instance variables and nonstatic methods of the outer class.
+	- they really aren't inner classes at all based on the standard definition of an inner class. The instances of an inner class share a relationship with the instances of an outter class, but this doesn't happen with static nested classes.
+	- A static nested class is simply a class that's a static member of the enclosing class.
+	```java
+	class BigOuter {
+		static class Nest { void go() { System.out.println("hi"); } }
+	}
+	class Broom {
+		static class B2 { void goB2() { System.out.println("hi 2"); } }
+		public static void main(String[] args) {
+			BigOuter.Nest n = new BigOuter.Nest(); n.go();
+			B2 b2 = new B2();
+			b2.goB2();
+		}
+	}
+	```
+
