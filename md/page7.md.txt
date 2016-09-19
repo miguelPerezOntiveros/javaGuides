@@ -1,0 +1,120 @@
+# Chapter 7: Assertions and Java 7 Exceptions
+
+### Assertions
+- 
+	```java
+private void methodA(int num) {
+	if (num >= 0) {
+		useNum(num + x);
+	} else {  				// num < 0 (this should never happen!)
+		System.out.println("Yikes! num is a negative number! " + num);
+	}
+}
+	```
+Is the same as:
+	```java
+private void methodA(int num) {
+	assert (num>=0);   // throws an AssertionError if this test isn't true
+	useNum(num + x);
+}
+	```
+- Assertions are inactive (as if they were not there) unless specifically Enabled.
+- You always assert that something is true. If it is, no problem. Else, an _AssertionError_ is thrown  (which you should never, ever handle!).
+-  You can add a second expression separated by a colon for it to appear on the stack trace:
+	```java
+	private void doStuff() {
+		assert (y > x): "y is " + y + " x is " + x;
+		// more code assuming y is greater than x
+	}
+	```
+- Assertions are typically enabled when an application is being tested and debugged, and disabled when the application is deployed. You can always enable assertions in the field.
+- todo page 430
+
+- Assertions were introduced in java 1.4, to be able to use _assert_ as an identifier (you will get warning but it will compile), you can use:
+	```java
+	javac -source 1.3 OldCode.java
+	```
+
+
+###### Using Assertions Appropriately
+- Appropriately != Legaly.
+- AssertionError is a subclass of Throwable, so it can be caught. But you shouldn’t catch assertions. YOu should only catch exceptions. To discourage you from doing so, the AssertionError doesn’t provide access to the object that generated it, all you get is the String message.
+- Because public methods are part of your interface to the outside world, you're supposed to guarantee that any constraints on the arguments will be enforced by the method itself. You don't want publicly accessible code that works only conditionally, depending on whether assertions are enabled. So, do enforce constraints on private methods' arguments, but do not enforce constraints on public methods, that includes Command-Line Arguments.
+- Do Use Assertions, Even in public Methods, to Check for Cases That You Know Are Never, Ever Supposed to Happen.
+	```java
+	switch(x) {
+        case 1: y = 3; break;
+        case 2: y = 9; break;
+        case 3: y = 27; break;
+            default: assert false; // we're never supposed to get here!
+	}
+	```
+- Don't Use assert Expressions That Can Cause Side Effects. An assert expression should leave the program in the same state it was in before the expression. If assertions are enabled, the only change to the way your program runs is that an AssertionError can be thrown if one of your assertions (think assumptions) turns out to be false.
+
+###### Enabling and Disabling Assertions
+- Assertions are disabled by default.
+- To enable assertions, use the _enableassertions_ or _ea_ option :
+	```java
+	java -ea TestClass
+	```
+
+- To disable assertions (default behaviour), use the _disableassertions_ or _da_ option:
+	```java
+	java -da TestClass
+	```
+- Use a package name or class name after the switch to selectively enable or disable.
+- You can combine switches. To disable assertions in a single class but keep them enabled for all others, do:
+	```
+   java -ea  -da:com.geeksanonymous.Foo
+	```
+- Use 3 dots to affect subpackages.
+	```
+   java -ea -da:com.geeksanonymous...
+	```
+
+
+### Using multi-Catch and finally clauses.
+- Java 7 has a feature called multi-catch:
+	```java
+	try {
+		// access the database and write to a file
+	} catch (SQLException | IOException e) { // type are separated by pipes and variable name goes at the end
+		handleErrorCase(e);
+	}
+	```
+- Make sure a given exception can only match one type.
+	```java
+	 catch(FileNotFoundException | IOException e)
+	```
+will generate:
+	```
+The exception FileNotFoundException is already caught by the alternative IOException
+	```
+- Don't assign a new value to the catch parameter. It is legal when only one type is listed, but it isn't good practice and creates confusing code. On a multi-catch, a type to set isn't defined, so Java makes the catch parameter final, preventing you from assigning something to it.
+- "handle and declare" is when you rethrow an exception:
+	```java
+	public void couldThrowAnException() throws IOException, SQLException {}
+	public void rethrow() throws SQLException, IOException {
+		try {
+			couldThrowAnException();
+		} catch (SQLException | IOException e) {
+			log(e);
+			throw e;
+		}
+	}
+	```
+You could rewrite this as:
+	```java
+	public void rethrow() throws SQLException, IOException {
+		try {
+			couldThrowAnException();
+		} catch (Exception e) { 5.
+			// this isn't really catching all exception subclasses, only any exceptions that the called methods happen to throw. Note: won't compile in Java 6
+		}
+	}
+	```
+In Java 6, we'd need the rethrow() method signature to be throws Exception in order to make this code compile.
+- to do page 444
+
+### Develop Code That Uses try-with- resources Statements (Including Using Classes That Implement the AutoCloseable Interface)
+

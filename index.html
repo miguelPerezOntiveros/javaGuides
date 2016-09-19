@@ -182,61 +182,25 @@
 		document.onkeydown = (e) => {
 			switch(e.keyCode)
 			{
-				case 38: // up
-					break;
-				case 40: // down
-		    		break;
-		    	case 37:
-		    		fillContent(--currentPage); // left
-		    		break;
-		    	case 39:
-		    		fillContent(++currentPage); // right
-		    		break;
-		    	case 49:
-		    		fillContent(currentPage = 1);
-		    		break;
-		    	case 50:
-		    		fillContent(currentPage = 2);
-		    		break;
-		    	case 51:
-		    		fillContent(currentPage = 3);
-		    		break;
-		    	case 52:
-		    		fillContent(currentPage = 4);
-		    		break;
-		    	case 53:
-		    		fillContent(currentPage = 5);
-		    		break;
-		    	case 54:
-		    		fillContent(currentPage = 6);
-		    		break;
-		    	case 55:
-		    		fillContent(currentPage = 7);
-		    		break;
-		    	case 56:
-		    		fillContent(currentPage = 8);
-		    		break;
-		    	case 57:
-		    		fillContent(currentPage = 9);
-		    		break;
-		    	case 48:
-		    		fillContent(currentPage = 10);
-		    		break;
-		    	case 81:
-		    		fillContent(currentPage = 11);
-		    		break;
-		    	case 87:
-		    		fillContent(currentPage = 12);
-		    		break;
-		    	case 69:
-		    		fillContent(currentPage = 13);
-		    		break;
-		    	case 82:
-		    		fillContent(currentPage = 14);
-		    		break;
-		    	case 84:
-		    		fillContent(currentPage = 15);
-		    		break;
+				case 38: break;// up					
+				case 40: break;// down
+		    	case 37: fillContent(--currentPage); break;// left
+		    	case 39: fillContent(++currentPage); break;// right
+		    	case 49: fillContent(currentPage = 1); break;
+		    	case 50: fillContent(currentPage = 2); break;
+		    	case 51: fillContent(currentPage = 3); break;
+		    	case 52: fillContent(currentPage = 4); break;
+		    	case 53: fillContent(currentPage = 5); break;
+		    	case 54: fillContent(currentPage = 6); break;
+		    	case 55: fillContent(currentPage = 7); break;
+		    	case 56: fillContent(currentPage = 8); break;
+		    	case 57: fillContent(currentPage = 9); break;
+		    	case 48: fillContent(currentPage = 10); break;
+		    	case 81: fillContent(currentPage = 11); break;
+		    	case 87: fillContent(currentPage = 12); break;
+		    	case 69: fillContent(currentPage = 13); break;
+		    	case 82: fillContent(currentPage = 14); break;
+		    	case 84: fillContent(currentPage = 15); break;
 		    }
 		}
 
@@ -263,7 +227,7 @@
 			$('#menu'+currentPage).parent().addClass('active'); 
 
 			new Promise(function(resolve){
-				$.get( 'md/OCA chapter' + currentPage + '.md.txt', function( data ) {
+				$.get( 'md/page' + currentPage + '.md.txt', function( data ) {
 					$('#middle').html(marked(data));
 					resolve('middle');
 				});

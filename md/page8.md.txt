@@ -101,26 +101,30 @@
 	Locale locJA = new Locale("ja");        // Japan
 	DateFormat dfUS = DateFormat.getInstance();
 	System.out.println("US       " + dfUS.format(d2));
-	DateFormat dfUSfull = DateFormat.getDateInstance(
-	                                       DateFormat.FULL);
+	DateFormat dfUSfull = DateFormat.getDateInstance(DateFormat.FULL);
 	System.out.println("US full  " + dfUSfull.format(d2));
-	DateFormat dfIT = DateFormat.getDateInstance(
-	                                       DateFormat.FULL, locIT);
+	DateFormat dfIT = DateFormat.getDateInstance(DateFormat.FULL, locIT);
 	System.out.println("Italy    " + dfIT.format(d2));
-
-	DateFormat dfPT = DateFormat.getDateInstance(
-	                                    DateFormat.FULL, locPT);
+	DateFormat dfPT = DateFormat.getDateInstance(DateFormat.FULL, locPT);
 	System.out.println("Portugal " + dfPT.format(d2));
-	DateFormat dfBR = DateFormat.getDateInstance(
-	                                    DateFormat.FULL, locBR);
+	DateFormat dfBR = DateFormat.getDateInstance(DateFormat.FULL, locBR);
 	System.out.println("Brazil   " + dfBR.format(d2));
-	DateFormat dfIN = DateFormat.getDateInstance(
-	                                    DateFormat.FULL, locIN);
+	DateFormat dfIN = DateFormat.getDateInstance(DateFormat.FULL, locIN);
 	System.out.println("India    " + dfIN.format(d2));
-	DateFormat dfJA = DateFormat.getDateInstance(
-	                                    DateFormat.FULL, locJA);
+	DateFormat dfJA = DateFormat.getDateInstance(DateFormat.FULL, locJA);
 	System.out.println("Japan    " + dfJA.format(d2));
 	```
+	produces:
+	```
+	US       12/14/10 3:32 PM
+	US full  Sunday, December 14, 2010
+	Italy    domenica 14 dicembre 2010
+	Portugal Domingo, 14 de Dezembro de 2010
+	Brazil   Domingo, 14 de Dezembro de 2010
+	India    ??????, ?? ??????, ????
+	Japan    2010?12?14?
+	```
+
 	```java
 	Locale locBR = new Locale("pt", "BR");  // Brazil
 	Locale locDK = new Locale("da", "DK");  // Denmark
@@ -130,6 +134,14 @@
 	System.out.println("def " + locDK.getDisplayLanguage());
 	System.out.println("loc " + locDK.getDisplayLanguage(locDK));
 	System.out.println("D>I " + locDK.getDisplayLanguage(locIT));
+	```
+	produces:
+	```
+	def Brazil
+	loc Brasil
+	def Danish
+	loc dansk
+	D>I danese
 	```
 
 ### Parsing
@@ -158,11 +170,14 @@
 
 ###### Search using Metacharacters
 - \d
+    ```
 	java RegTest "\\d" "a12c3e456f"
-                  source: a12c3e456f
-                  index: 01234567890123456
-                  expression: \d
-                  match positions: 1 2 4 6 7 8
+    ```
+    ```
+	index: 01234567890123456
+	expression: \d
+	match positions: 1 2 4 6 7 8
+    ```
 - \D A non-digit (anything BUT 0–9)
 - \s A whitespace character (e.g. space, \t, \n, \f, \r)
 - \S A non-whitespace character
@@ -195,7 +210,7 @@
 	index: 01234567890123456
 	expression: \b
 	match positions: 1 3 4 6
-- the dot operator: "any character can serve here." 
+- The dot operator: "any character can serve here." 
 	source: "ac abc a c"
 	pattern: a.c
 	will produce the output
@@ -205,29 +220,19 @@
 - [abc] Searches only for a's, b's, or c's
 - [a-f] Searches only for a, b, c, d, e, or f characters
 - [a-fA-F] Searches for the first six letters of the alphabet, both cases.
-
-	source: "cafeBABE"
-	index:   01234567
-	pattern: [a-cA-C]
-	returns positions 0, 1, 4, 5, 6.
+- Example
+	- source: "cafeBABE"
+	- index:   01234567
+	- pattern: [a-cA-C]
+	- returns positions 0, 1, 4, 5, 6.
 
 - "^" to negate the characters specified, nested brackets to create a union of sets, and "&&"
 to specify the intersection of sets.While these constructs are not on the exam, they are quite useful, and good examples can be found in the API for the java.util.regex.Pattern class.
 
 ###### Search using Quantifiers
-- Example: hexadecimal literals
-	0[xX][0-9a-fA-F]
-	The preceding expression could be stated:
-	Find a set of characters in which the first character is a "0", the second character is either an "x" or an "X", and the third character is a digit from "0" to "9", a letter from "a" to "f", or an uppercase letter from "A" to "F".
-
-	source: 12 0x 0x12 0Xf 0xg
-	index: 012345678901234567
-	regex would return 6 and 11. (Note: 0x and 0xg are not valid hex numbers.)
-
-###### Groups 
-
 - \* Zero or more occurrences
 - ? Zero or one occurrence
+- Example: hexadecimal literals, we can use 0[xX]([0-9a-fA-F])+
 
 - to separate proyects:
 	..."proj3.txt,proj1sched.pdf,proj1,proj2,proj1.java"...
@@ -249,17 +254,18 @@ to specify the intersection of sets.While these constructs are not on the exam, 
 	- "reluctant,"
 	- "possessive."
 - ? is greedy, ?? is reluctant, for zero or once
-- * is greedy, *? is reluctant, for zero or more
-- + is greedy, +? is reluctant, for one or more
+- \* is greedy, *? is reluctant, for zero or more
+- \+ is greedy, +? is reluctant, for one or more
 
-source:  yyxxxyxx
-pattern:  .*xx
-0 yyxxxyxx
+- Example
+	- source:  yyxxxyxx
+	- pattern:  .*xx
+	- 0 yyxxxyxx
 
-source:  yyxxxyxx
-pattern:  .*?xx
-0 yyxx
-4 xyxx
+- Example
+	- source:  yyxxxyxx
+	- pattern:  .*?xx
+	- 0 yyxx, 4 xyxx
 
 ###### Metacharacters in Strings
 - "\d" for example, does not compile, the \d escape sequence does not exist. Use "\\d"
