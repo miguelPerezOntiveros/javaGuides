@@ -82,7 +82,7 @@
 - A single generic _catch_ can be used to catch multiple subtypes.
 - _RuntimeException_ are the only unchecked exceptions and it and it's decendants don´t need to be handled or declared, meaning you _can_ catch them. 
 - You can create your own exceptions, for example extending from _Exception_.
-- You sholdn´t handle an _error_, because you can rarely recover from one.
+- You shouldn´t handle an _error_, because you can rarely recover from one.
 - _Error_ and _Exception_ are inmediate children of _Throwable_, who is an inmediate child of _Object_.
 - An overriding method cannot throw checked exceptions that are broader than those thrown by the overridden method (Apart from _RuntimeException_). 
 

@@ -1,7 +1,14 @@
 # Chapter 7: Assertions and Java 7 Exceptions
 
 ### Assertions
-- 
+- Use
+	```java
+private void methodA(int num) {
+	assert (num>=0);   // throws an AssertionError if this test isn't true
+	useNum(num + x);
+}
+	```
+Instead of:	
 	```java
 private void methodA(int num) {
 	if (num >= 0) {
@@ -11,36 +18,27 @@ private void methodA(int num) {
 	}
 }
 	```
-Is the same as:
-	```java
-private void methodA(int num) {
-	assert (num>=0);   // throws an AssertionError if this test isn't true
-	useNum(num + x);
-}
-	```
-- Assertions are inactive (as if they were not there) unless specifically Enabled.
-- You always assert that something is true. If it is, no problem. Else, an _AssertionError_ is thrown  (which you should never, ever handle!).
--  You can add a second expression separated by a colon for it to appear on the stack trace:
+- You always assert that something is true. If it is, no problem. Else, an _AssertionError_ is thrown  (which you should never handle).
+- You can add a second expression separated by a colon for it to appear on the stack trace:
 	```java
 	private void doStuff() {
 		assert (y > x): "y is " + y + " x is " + x;
 		// more code assuming y is greater than x
 	}
 	```
+- Assertions are inactive (as if they were not there) unless specifically Enabled.
 - Assertions are typically enabled when an application is being tested and debugged, and disabled when the application is deployed. You can always enable assertions in the field.
-- todo page 430
 
 - Assertions were introduced in java 1.4, to be able to use _assert_ as an identifier (you will get warning but it will compile), you can use:
 	```java
 	javac -source 1.3 OldCode.java
 	```
 
-
 ###### Using Assertions Appropriately
 - Appropriately != Legaly.
-- AssertionError is a subclass of Throwable, so it can be caught. But you shouldn’t catch assertions. YOu should only catch exceptions. To discourage you from doing so, the AssertionError doesn’t provide access to the object that generated it, all you get is the String message.
-- Because public methods are part of your interface to the outside world, you're supposed to guarantee that any constraints on the arguments will be enforced by the method itself. You don't want publicly accessible code that works only conditionally, depending on whether assertions are enabled. So, do enforce constraints on private methods' arguments, but do not enforce constraints on public methods, that includes Command-Line Arguments.
-- Do Use Assertions, Even in public Methods, to Check for Cases That You Know Are Never, Ever Supposed to Happen.
+- AssertionError is a subclass of Throwable, so it can be caught. But you shouldn’t catch assertions. YOu should only catch exceptions. To discourage you from doing so, the AssertionError doesn’t provide access to the object that generated it, all you get is the _String_ message.
+- Because public methods are part of your interface to the outside world, you're supposed to guarantee that any constraints on the arguments will be enforced by the method itself. You don't want publicly accessible code that works only conditionally, depending on whether assertions are enabled. So, do enforce constraints on private methods' arguments, but do not enforce constraints on public methods, or on Command-Line Arguments.
+- Do Use Assertions, even in public Methods, to check for cases that you know are never supposed to happen.
 	```java
 	switch(x) {
         case 1: y = 3; break;
@@ -72,8 +70,7 @@ private void methodA(int num) {
    java -ea -da:com.geeksanonymous...
 	```
 
-
-### Using multi-Catch and finally clauses.
+### Multi-Catch Clauses
 - Java 7 has a feature called multi-catch:
 	```java
 	try {
@@ -108,13 +105,134 @@ You could rewrite this as:
 	public void rethrow() throws SQLException, IOException {
 		try {
 			couldThrowAnException();
-		} catch (Exception e) { 5.
-			// this isn't really catching all exception subclasses, only any exceptions that the called methods happen to throw. Note: won't compile in Java 6
+		} catch (Exception e) { // this isn't really catching all exception subclasses, only any exceptions that the called methods happen to throw. Note: won't compile in Java 6
+			log(e);
+			throw e;
 		}
 	}
 	```
-In Java 6, we'd need the rethrow() method signature to be throws Exception in order to make this code compile.
-- to do page 444
+The multi-catch is gone and replaced with catch(Exception e). In Java 6, we'd need the rethrow() method signature to be throws Exception in order to make this code compile.
+- If _couldThrowAnException()_ changed to never throw a _SQLException_ and removes SQLException from the signature, rethrow would not compile anymore. It is reasonable for code to stop compiling if we add exceptions to a method. But we don't want our code to break if a method's implementation gets LESS brittle.
 
-### Develop Code That Uses try-with- resources Statements (Including Using Classes That Implement the AutoCloseable Interface)
+### Autoclosables
 
+|                      | try-catch-finally               | try-with-resources                    |
+|----------------------|---------------------------------|---------------------------------------|
+| Resource declared    | Before try keyword              | In parentheses within try declaration |
+| Resource initialized | In try block                    | In parentheses within try declaration |
+| Resource closed      | In finally block                | Nowhere—happens automatically         |
+| Required keywords    | try and One of catch or finally | try                                   |
+- This:
+	```java
+	Reader reader = null;
+	try { // read from file
+	
+	} catch(IOException e) {
+		log(); throw e;
+	} finally {
+		if (reader != null) {
+			try {
+				reader.close();
+			} catch (IOException e) { 
+				// ignore exceptions on closing file}
+		}
+	}
+	```
+is equivalent to:
+	```java
+	try (Reader reader = new BufferedReader(new FileReader(file))) {   
+		// note the new syntax read from file
+	} catch (IOException e) { 
+		log(); throw e;
+	}
+	```
+	_reader_ is scoped to just the try block. The _catch_ is still optional.
+
+- You can have a try-with-resources with no _catch_ or _finally_ (The legal example does have a finally block; you just don't see it):
+	```java
+	try (Reader reader = new BufferedReader(new FileReader(file))) {
+		// do stuff
+	}
+	```
+-  You can use a semicolon when declaring multiple resources in the try.
+	```java
+		try (MyResource mr = MyResource.createResource(); MyThingy mt = mr.createThingy()) {
+			// second resource
+			// do stuff
+		}
+	```
+- You must use a type that implements _AutoClosable_. _AutoCloseable_ only has one method to implement. Example using the interface:
+	```java
+	public class MyResource implements AutoCloseable {
+		public void close() {
+			// take care of closing the resource
+		}
+	}
+	```
+- For classes that implement AutoCloseable, the implementation is required to be idempotent.
+- Java 5 had the _Closable_ interface, it is similar, but it only allows _IOExceptions_ or subclasses to be thrown. It extends AutoClosable.
+- Example:
+	```java
+	class One implements AutoCloseable {
+	    public void close() {
+	        System.out.println("Close - One");
+	    }
+	}
+	class Two implements AutoCloseable {
+	    public void close() {
+	        System.out.println("Close - Two");
+	    }
+	}
+	class TryWithResources {
+	    public static void main(String[] args) {
+	        try (One one = new One(); Two two = new Two()) {
+	            System.out.println("Try");
+	            throw new RuntimeException();
+	        } catch (Exception e) {
+	            System.out.println("Catch");
+	        } finally {
+	            System.out.println("Finally");
+	        }
+	    }
+	}
+	```
+	Will print:
+	```
+	Try
+	Close – Two
+	Close – One
+	Catch
+	Finally
+	```
+	The close() method gets called in the reverse order in which resources are declared to allow for the fact that resources might depend on each other.
+
+###### Suppressed Exceptions
+- This:
+	```java
+	public class Suppressed {
+	    public static void main(String[] args) {
+	        try (One one=new One()) {
+	            throw new Exception("Try");
+	        }
+	        catch (Exception e) {
+	            System.err.println(e.getMessage());
+	            for (Throwable t: e.getSuppressed()) {
+	                System.err.println("suppressed:" + t);
+	            }
+	        }
+	    }
+	}
+	class One implements AutoCloseable {
+	    public void close() throws IOException {
+	        throw new IOException("Closing");
+	    }
+	}
+	```
+	Will print out
+	```
+	Try
+	suppressed:java.io.IOException: Closing
+	```
+- The exception we thought we were throwing still gets treated as most important, but Java also adds any exceptions thrown by the _close()_ methods to a suppressed array in that main exception.
+- The exception thrown in close() only get suppresed if it is not the only one.
+- If the catch or finally block throws an exception, no suppressions happen. The last exception thrown gets sent to the caller rather than the one from the try.

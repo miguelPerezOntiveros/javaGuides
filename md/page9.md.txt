@@ -1,1 +1,35 @@
-# Chapter 9: __
+# Chapter 9: I/O and NIO
+
+- Since the Java 7 functionality was added to package names that begin with java.nio, the new name was NIO.2. For the purposes of this chapter and the exam, NIO is shorthand for NIO.2.
+
+### I/O classes you need to understand
+- 
+	- File - an abstract representation of file and directory pathnames.
+	```
+	import java.io.*;
+	class Writer1 {
+		public static void main(String [] args) {
+			File file = new File("fileWrite1.txt"); // There's no file (lower f) yet!
+		}
+	}
+	```
+
+	- FileReader
+	- BufferedReader
+	- FileWriter
+	- BufferedWriter
+	- PrintWriter
+	- Console
+
+### File and Directory Paths
+- to do 542
+
+### Operations with files
+
+### File and Directory Attributes
+
+### Access a Directory Tree
+
+### PathMatcher
+
+### Watch a Directory for Changes

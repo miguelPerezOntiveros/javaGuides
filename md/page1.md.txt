@@ -43,7 +43,7 @@
 - _main()_ can be overloaded.
 
 ### Import Statements
-- The most specific one will be used, regardless of the order of apparience.
+- The most specific one will be used, regardless of the order of appearance.
 - They help you type less:
 -   ``` java
         System.out.println(Integer.MAX_VALUE);
