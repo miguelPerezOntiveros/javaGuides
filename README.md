@@ -1,6 +1,6 @@
 # Java 1Z0-803 Guides
 This project is comprised of a markdown viewer which you can use with any markdown files, as well as markdown files for each chapter of a Java SE 7 study guide. Its purpose is to enable efficient studying of any topic and to provide an accessible place to create and view reference material.
-Java is concurrent, class-based and object-oriented, it is also the number 1 programming language for enterprise development. This summay will let you digest 1000 pages 
+Java is concurrent, class-based and object-oriented, it is also the number 1 programming language for enterprise development. This summay will let you digest 1000 pages of a Java study guide in 15 short markdown-based documents.
 
 ***[Click here to view the online demo](http://miguelp.com/javaGuides)***.
 
@@ -16,7 +16,8 @@ For example:
 - Press '0' to go to chapter 10.
 - Press 'q' to go to chapter 11.
 - Press 't' to go to chapter 15.
-You can also use the scroll-tracking menu to go to specific sections.
+
+You can also use the scroll-tracking menu to go to specific sections, and the place your cursor at the top of the screen to bring down a chapter menu.
 
 ### To Do:
 - turn menus dynamic
