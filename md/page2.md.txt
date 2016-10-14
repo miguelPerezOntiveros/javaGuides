@@ -18,6 +18,29 @@
 - If a reference variable is declared as an interface type, it can reference any object of any class that implements the interface.
 - The compiler only knows about the declared reference type, but the Java Virtual Machine (JVM) at runtime knows what the object really is, so even if the subclass overrides an inherited method and it is called via a superclass reference, the JVM will invoke the subclass version. This only applies to instance methods, not static methods.
 - Works with interfaces as well as superclasses.
+- Examples with castings:
+- ``` java
+    public class Main {
+        public static void main(String[] args) { 
+            Object o = new Main();
+            myFunc((Main)o); 
+        }
+        /* Will compile but not run
+        public static void main(String[] args) { 
+            Object o = new Object();
+            myFunc((Main)o); 
+        }
+        */
+        /* Will not compile, even though should run
+        public static void main(String[] args) { 
+            Object o = new Main();
+            myFunc(o); 
+        }
+        */
+        public static void myFunc(Main c) {}
+    }
+```
+- This will not run, but will compile.
 
 ###### Casting
 - Upcasting(to a more general type) happens implicitly because you are restricting the number of methods you can invoke.

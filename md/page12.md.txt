@@ -2,8 +2,7 @@
 
 ### Inner Classes
 
-- one of the key benefits of an inner class is the "special relationship" an inner class instance shares with an instance of the outer class. That "special relationship" gives code in the inner class access to members of the enclosing (outer) class, as if the inner class were part of the outer class
- - An inner class instance has access to all members of the outer class, even those marked private.
+- One of the key benefits of an inner class is the "special relationship" an inner class instance shares with an instance of the outer class. That "special relationship" gives code in the inner class access to members of the enclosing (outer) class, as if the inner class were part of the outer class: an inner class instance has access to all members of the outer class, even those marked private.
 
 ###### Compiling
 - Source
@@ -23,7 +22,22 @@
 
 ##### Creating an Inner Class Object
 - Creating it from inside  the Outside Class is simple, just write the code inside the Outside Class brackets.
-- From the Outside:
+- From within the outer class, the _MyOuter_ code treats _MyInner_ just as though MyInner were any other accessible class:
+    ```java
+	class MyOuter {
+		private int x = 7;
+		public void makeInner() {
+			MyInner in = new MyInner();  // make an inner instance
+			in.seeOuter();
+		}
+		class MyInner {
+			public void seeOuter() {
+				System.out.println("Outer x is " + x);
+			}
+		} 
+	}
+    ```
+- From outside of the outer class:
     ```java
 	public static void main(String[] args) {
 		MyOuter mo = new MyOuter(); // gotta get an instance!
@@ -58,6 +72,21 @@
 -  The same rules apply to method-local inner classes as to local variable declarations. You can't, for example, mark a method-local inner class public, private, protected, static, transient, and the like. For the purpose of the exam, the only modifiers you can apply to a method-local inner class are abstract and final, but, as always, never both at the same time.
 - You can't apply an access modifier the way you can with a regular inner class
 - A local class declared in a static method has access to only static members of the enclosing class, since there is no associated instance of the enclosing class. If you're in a static method, there is no _this_, so an inner class in a static method does not have access to instance variables.
+- Example:
+    ```java
+	class MyOuter2 {
+		private String x = "Outer2";
+		void doStuff() {
+			class MyInner {
+				public void seeOuter() {
+					System.out.println("Outer x is " + x);
+				}  // close inner class method
+			}    // close inner class definition
+			MyInner mi = new MyInner();  // This line must come after the class
+			mi.seeOuter();
+		} // close outer class method doStuff()
+	}   // close outer class
+    ```
 
 ### Anonymous Inner Classes
 - Inner classes declared without any class name at all.
@@ -99,7 +128,7 @@
 - this is the only time you could use the syntax 'new Cookable()', where Cookable is an interface.
 - Anonymous interface implementers can implement only one interface. It can't even extend a class and implement an interface (directly) at the same time. 
 
-###### Argument-De ned Anonymous Inner Classes
+###### Argument-Defined Anonymous Inner Classes
 -	
 	```java
 	class MyWonderfulClass {
@@ -121,9 +150,9 @@
 	```
 
 ### Static Nested Classes
-	- Just as a static method does not have access to the instance variables and nonstatic methods of the class, a static nested class does not have access to the instance variables and nonstatic methods of the outer class.
-	- they really aren't inner classes at all based on the standard definition of an inner class. The instances of an inner class share a relationship with the instances of an outter class, but this doesn't happen with static nested classes.
-	- A static nested class is simply a class that's a static member of the enclosing class.
+- Just as a static method does not have access to the instance variables and nonstatic methods of the class, a static nested class does not have access to the instance variables and nonstatic methods of the outer class.
+- They really aren't inner classes at all based on the standard definition of an inner class. The instances of an inner class share a relationship with the instances of an outter class, but this doesn't happen with static nested classes.
+- A static nested class is simply a class that's a static member of the enclosing class.
 	```java
 	class BigOuter {
 		static class Nest { void go() { System.out.println("hi"); } }
