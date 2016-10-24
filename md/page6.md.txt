@@ -77,7 +77,7 @@
 - If a System.exit() is present, the _finally_ block will not execute. 
 - A _try_ needs to have a _finally_, a _catch_, or both.
 - Any method that might throw an exception (unless it's a subclass of RuntimeException) must declare the exception.
-- If you have multiple _catch_ clauses, the most generic need to be below the most specific.
+- If you have multiple _catch_ clauses, the most generic needs to be below the most specific.
 - Java's "handle or declare": Each method must either handle all checked exceptions by supplying a catch clause or list each unhandled checked exception as a thrown exception.
 - A single generic _catch_ can be used to catch multiple subtypes.
 - _RuntimeException_ are the only unchecked exceptions and it and it's decendants don´t need to be handled or declared, meaning you _can_ catch them. 

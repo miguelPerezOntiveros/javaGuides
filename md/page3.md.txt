@@ -16,7 +16,7 @@
     - base 16: They start with _0x_ or _0X_.
         - You can use uppercase or lowercase letters.
     - All four integer literals (binary, octal, decimal, and hexadecimal) are defined as int by default, but they may also be specified as _long_ by placing a suffix of _L_ or _l_ after the number: 
-    - Numeric literals (_int_ s, _double_ s and _float_ s) can be writen with underscores inside them, though not at the beggining and not next to the decimal point: _1_000_000_.
+    - Numeric literals (_int_ s, _double_ s and _float_ s) can be writen with underscores inside them, though not at the beggining, end or next to the decimal point: _1_000_000_.
 - Floating point literals
     - They are _double_ s (64 bits) by default, so if you want to assign a floating-point literal to a variable of type _float_ (32 bits), you must attach the suffix _F_ or _f_ to the number. Possible loss of precision.
     - A _D_ or _d_ suffix makes them _double_ s. It's not necessary, it is allready the default behavior.
