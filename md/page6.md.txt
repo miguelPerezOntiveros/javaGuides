@@ -10,7 +10,7 @@
 ###### _switch_
 - A _switch_'s expression must evaluate to _enum_, _string_ or values that can be implicitly cast to _int_ (not _long_, _float_ or _double_).
 - A _switch_ can only check for equality, no other relational operators.
-- A _case_ argument larger than 127 will not compile if you switch on a variable smaller than an int.
+- A _case_ argument larger than the maximum number supported by the type in the switch, will not compile.
 - 2 _case_ clauses cannot have the same constant in the same _switch_.
 - Case constants are evaluated top-down, the first case constant that matches the switch's expression is the execution entry point.
 - Execution _fall-through_: When no break is present, code execution continues to the next case.
@@ -73,7 +73,7 @@
     ```
 
 ### Exceptions
-- If there is a return statement in the _try_ block, the _finally_ block executes before it executes.
+- If there is a return statement in the _try_ block, the _finally_ block executes after the return.
 - If a System.exit() is present, the _finally_ block will not execute. 
 - A _try_ needs to have a _finally_, a _catch_, or both.
 - Any method that might throw an exception (unless it's a subclass of RuntimeException) must declare the exception.

@@ -1,0 +1,193 @@
+HashSet is an unordered, unsorted set
+LinkedHashSet is an ordered (order of insertion) but not sorted set
+A Hashtable collection is not ordered.
+An ArrayList, however, keeps the order established by the elements' index position
+LinkedHashSet keeps the order established by insertion
+
+natural order of the elements = sorted
+Sorting is done based on properties of the objects themselves.
+Natural order is alphabetically, by numeric value or for objects: depending on the Comparable. In some cases, a class might also inherit a natural order from a superclass rather than define its own order.
+
+
+List Interface
+	ArrayList
+		implements the new RandomAccess interface—marker interface (meaning it has no methods)
+		Choose this over a LinkedList when you need fast iteration but aren't as likely to be doing a lot of insertion and deletion.
+	Vector
+		synchronized ArrayList.
+
+
+
+
+
+13
+
+A thread in Java begins as an instance of java.lang.Thread. So if the work you want done is the job, the one doing the work (actually executing the job code) is the thread
+the job always starts from a run() method
+You can define and instantiate a thread in one of two ways:
+■ Extend the java.lang.Thread class.
+■ Implement the Runnable interface.
+you're much more likely to implement Runnable than extend Thread. (subclassing should be reserved for specialized versions of more general superclasses.)
+
+Extending java.lang.Thread
+	Extend the java.lang.Thread class and override the run() method.
+	if you extend Thread, you can't extend anything else.
+	You can overload the run method but it will be ignored by the Thread class unless you call it yourself.
+
+Implementing java.lang.Runnable
+	you can still extend a class
+
+Instantiating a Thread
+	Extending Thread:
+		´´´
+		MyThread t = new MyThread();
+		´´´
+		The Thread class itself implements Runnable. This means that you could pass a Thread to another Thread's constructor.
+	Implementing Runnable: 
+		´´´
+		MyRunnable r = new MyRunnable();
+		Thread t = new Thread(r);
+		´´´
+		You can pass a single Runnable instance to multiple Thread objects so that the same Runnable becomes the target of multiple threads.
+
+Thread has other constructors:
+	■ Thread()
+	■ Thread(Runnable target)
+	■ Thread(Runnable target, String name) 
+	■ Thread(String name)
+
+The isAlive() method returns wether a thread has been started but has not yet completed its run() method.
+
+Starting a Thread
+t.start();
+Things that happen when calling start():
+■ A new thread of execution starts (with a new call stack).
+■ The thread moves from the new state to the runnable state.
+■ When the thread gets a chance to execute, its target run() method will run.
+Calling a Thread's run() method directly just means you're invoking a method from whatever thread is currently executing, and the run() method goes onto the current call stack rather than at the beginning of a new call stack.
+Thread has setName(String) and  getName() methods. 
+A Runnable can get the current thread with the static ```Thread.currentThread()``
+
+Things that happen when run() is completed:
+the Thread ceases to be a thread of execution, it is considered terminated or dead.
+The stack for that thread dissolves.
+It's still a Thread object though, you can call its methods.
+You can´t call start() again. Once a thread has been started, it can never be started again. if you call start, it will thow an IllegalThreadStateException whether or not the run() method has completed from the first start() call.
+
+A thread needs to be in the runnable state to be chosen by the scheduler to be the one and only running thread.
+from the java.lang.Thread Class Some of the methods that can help us influence thread scheduling are as follows:
+	public static void sleep(long millis) throws InterruptedException
+	public static void yield()
+	public final void join() throws InterruptedException
+	public final void setPriority(int newPriority)
+from the java.lang.Object, the following three thread-related methods:
+	public final void wait() throws InterruptedException
+	public final void notify()
+	public final void notifyAll()
+
+Thread states:
+	New
+	Runnable
+	Running
+	Waiting/blocked/sleeping (thread still considered alive)
+	Dead
+
+				/ Blocked <-
+	         <-              \
+	New -> Runnable <-> Running -> Dead
+
+In most cases, the running thread will be of equal or greater priority than the highest-priority threads in the pool.
+A thread gets a default priority that is the priority of the thread of execution that creates it.
+You can set a thread's priority directly by calling its setPriority() method.
+Priorities are usually (not always) set using integer between 1 and 10.
+Although the default priority is 5, the Thread class has the three following constants (static final variables) that define the range of thread priorities:
+   Thread.MIN_PRIORITY  (1)
+   Thread.NORM_PRIORITY  (5)
+   Thread.MAX_PRIORITY  (10)	
+
+three ways a running thread could leave the running state: sleep(), yield() and join(). t.sleep(); or t.yield(); are static methods, and affect the currently executing thread.
+sleep()
+	When a thread encounters a sleep call, it must go to sleep for at least the specified number of milliseconds (unless it is interrupted before its wake-up time, in which case, it immediately throws the InterruptedException).
+
+yield()
+	the static Thread.yield() is supposed to make the currently running thread head back to runnable to allow other threads of the same priority to get their turn, but it may be the selected thread to run again.
+
+join()
+	the non-static Thread.join() lets one thread "join onto the end" of another thread.
+	If you run ```t.join();``` from the main method, then the main thread will wait for the t thread to die. "Join me (the current thread) to the end of t, so that t must finish before I (the current thread) can run again"
+	An overloaded version accepts the number of milliseconds, after they have passed, the current thread will become runable even if the thread it was waiting for is still alive.
+	if the thread it's trying to join with is not alive, the current thread won't need to back out.
+Other reasons a thread can leave the running state:
+	The thread's run() method completes. 
+	A call to wait() on an object, not on a thread.
+	A thread can't acquire the lock on the object whose method code it's attempting to run.
+	The thread scheduler decides so.
+
+Synchronization and Locks
+Every object in Java has a built-in lock that only comes into play when the object has synchronized method code.
+If one thread has picked up a lock, no other thread can enter the synchronized code.
+Only methods (or blocks) can be synchronized, not variables or classes.
+Each object has just one lock.
+ If you have methods that don't access the data you're trying to protect, then you don't need to synchronize them. Synchronization can cause a hit in some cases (or even deadlock if used incorrectly).
+ If a thread goes to sleep, it holds any locks it has—it doesn't release them.
+A thread can acquire more than one lock. For example entering a synchronized method, and then immediately invoking a synchronized method on a different object. As the stack unwinds, locks are released again.
+If a thread calls a synchronized method on an object he already has the lock for, no problem.
+You can synchronize a block of code rather than a method:
+´´´
+class SyncTest {
+    public void doStuff() {
+		System.out.println("not synchronized");
+		synchronized(this) {
+			System.out.println("synchronized");
+		}
+	}
+}
+´´´
+When you synchronize a method, the object used to invoke the method is the object whose lock must be acquired. But when you synchronize a block of code, you specify which object's lock you want to use as the lock, so you could, for example, use some third-party object as the lock for this piece of code.
+You could always replace a synchronized method with a non-synchronized method containing a synchronized block.
+static methods can be synchronized, but unstead of "this" you would use ```MyClass.class``` or ```Class.forName("MyClass")```.
+
+
+If a thread tries to get a lock that is already taen, it has to sit there until the lock is released and the thread can again become runnable/running. When a lock is released, any thread waiting could be the one to get it.
+Threads calling non-static synchronized methods in the same class will only block each other if they're invoked using the same instance.
+Threads calling static synchronized methods in the same class will always block each other—they all lock on the same Class instance.
+A static synchronized method and a non-static synchronized method will not block each other, ever.
+Generally, any time more than one thread is accessing mutable (changeable) data, you synchronize to protect that data to make sure two threads aren't changing it at the same time or that one isn't changing it at the same time the other is reading it.
+To keep things simple, access to static fields should be done using static synchronized methods. Access to non-static fields should be done using non-static synchronized methods. Many confusing scenarios can occure otherwise.
+Thread-safe classes.
+Just because a class is described as "thread-safe" doesn't mean it is always thread-safe. If individual methods are synchronized, that may not be enough—you may be better off putting in synchronization at a higher level (i.e., put it in the block or method that calls the other methods). Once you do that, the original synchronization may well become redundant.
+
+Thread Interaction
+to communicate with each other about their locking status, the Object class has wait(), notify(), and notifyAll().
+using wait() and notify() lets one thread put itself into a "waiting room" until some other thread notifies it that there's a reason to come back out.
+wait(), notify(), and notifyAll() must be called from within a synchronized context! A thread can't invoke a wait or notify method on an object unless it owns that object's lock.
+A thread gets on an object's waiting list by executing the wait() method of the target object. From that moment, it doesn't execute any further instructions until the notify() method of the target object is called.  If many threads are waiting on the same object, only one will be chosen.
+if the thread calling wait() does not own the lock, it will throw an IllegalMonitorStateException. 
+ A waiting thread can be interrupted in the same way as a sleeping thread, so you have to take care of the exception
+ There is also a second form of wait() that accepts a number of milliseconds as a maximum time to wait. After the specified time, the thread goes back to Runnable.
+ notifyAll() is used to notify all threads waiting, instead of just one.
+ when you want to wait for something, you also need to be able to check if it has already happened. Generally, the best way to solve this is to put in some sort of loop that checks on some sort of conditional expressions and only waits if the thing you're waiting for has not yet happened.
+ when your thread wakes up from a wait(), you don't know for sure why it was awakened: 'spontaneous wakeup'.
+ when you use wait() and notify() or notifyAll(), you should almost always also have a while loop around the wait() that checks a condition and forces continued waiting until the condition is met.
+
+ Of Thread, static methods are sleep() and yield(), not static methods are join() and start().
+
+Class Object 		Class Thread 	Runnable()
+wait ()				start() 		run()
+notify()			sleep()
+notifyAll()			yield()
+					join()
+
+when an object goes to sleep, it holds onto any locks it acquired prior to sleeping. When a thread goes to sleep, its locks will be unavailable to other threads
+ a wait() call means "let me wait in your pool" or "add me to your waiting list.", "notify me later"
+The notify() method CANNOT specify which waiting thread to notify.
+
+Deadlocking can occur when a locked object attempts to access another locked object that is trying to access the first locked object. In other words, both threads are waiting for each other's locks to be released; therefore, the locks will never be released. Thread execution halts.
+
+
+Quiz 13
+1. C
+2. D
+3. E  was D
+4. BCF was BF
+5. D 

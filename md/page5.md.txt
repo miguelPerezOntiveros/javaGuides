@@ -29,7 +29,7 @@
     - public String concat(String s) - Returns a string with the value of the String passed in to the method appended to the end of the String used to invoke the method.
     - public boolean equalsIgnoreCase(String s) - Determines equality of 2 strings, ignoring case.
     - public int length() - Returns the number of characters in a String.
-    - public String replace(char old, char new) - Replaces ocurrences od a character with a new character.
+    - public String replace(char old, char new) - Replaces ocurrences of a character with a new character.
     - public String substring(int begin) - Returns a part of a String. Second argument is the end position, and it is 1-based.
     - public String toLowerCase() - Returns a string, with uppercase characters converted to lowercase.
     - public String toString() - Returns the value of a String.

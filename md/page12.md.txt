@@ -109,7 +109,7 @@
 		}; // please notice this semicolon.
 	}
 	```
-- Polymorfism is takin place. You can only call methods on an anonymous inner class reference that are defined in the reference variable type.
+- Polymorfism is taking place. You can only call methods on an anonymous inner class reference that are defined in the reference variable type.
 
 ###### Anonymous subclass of a class
 - 
