@@ -474,97 +474,101 @@ System.out.format("%d", 12.3);
 
 ### Resource Bundles
 - Using a resource bundle has three steps: obtaining the Locale, getting the ResourceBundle, and looking up a value from the resource bundle. First, we create a Locale object.
-Labels_en.properties
-	hello=Hello Java!
+- Labels_en.properties
+	- hello=Hello Java!
 Labels_fr.properties
-	hello=Bonjour Java!
-WhichLanguage.java
-	import java.util.Locale;
-	import java.util.ResourceBundle;
-	public class WhichLanguage {
-		public static void main(String[] args) {
-			Locale locale = new Locale(args[0]);
-			ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
-			System.out.println(rb.getString("hello"));
+	- hello=Bonjour Java!
+- WhichLanguage.java
+	```
+		import java.util.Locale;
+		import java.util.ResourceBundle;
+		public class WhichLanguage {
+			public static void main(String[] args) {
+				Locale locale = new Locale(args[0]);
+				ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
+				System.out.println(rb.getString("hello"));
+			}
 		}
-	}
-Running the code:
-   java WhichLanguage en
-   java WhichLanguage fr
+	```
+	```
+	> java WhichLanguage en
+	Hello Java!
+	> java WhichLanguage fr
+	Bonjour Java!
+	```
 
 ##### Property Resource Bundles
-	- Aside from comments, a property file contains key/value pairs:
-    ```java
+- Aside from comments, a property file contains key/value pairs:
+	```java
 	# this file contains a single key/value
 	hello=Hello Java
 	```
-	- If you want to break up a single line into multiple lines, you use a backslash.
-	- Java helpfully ignores any whitespace before subsequent lines of a multiline property so you can indentate.
-	- If you actually want a line break, you use the standard Java \n escape sequence.
-	- alternative syntaxes use ! to comment and : or a space to assign a value.
+- If you want to break up a single line into multiple lines, you use a backslash.
+- Java helpfully ignores any whitespace before subsequent lines of a multiline property so you can indentate.
+- If you actually want a line break, you use the standard Java \n escape sequence.
+- alternative syntaxes use ! to comment and : or a space to assign a value.
+
 ##### Java Resource Bundles
-	- Used to go beyond simple property file key to string value mappings, for example to read from a database.
-	- We write Java classes that extend _ListResourceBundle_, and implement
-	 protected Object[][] getContents(). The inner array is key/value pairs.
+- Used to go beyond simple property file key to string value mappings, for example to read from a database.
+- We write Java classes that extend _ListResourceBundle_, and implement protected Object[][] getContents(). The inner array is key/value pairs.
 
- import java.util.ListResourceBundle;
-                  public class Labels_en_CA extends ListResourceBundle {
-                    protected Object[][] getContents() {
-                      return new Object[][] {
-                         { "hello", new StringBuilder("from Java") }
-                       };
-} }
-
-	  Locale locale = new Locale(args[0], "CA");
-                  ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
-                  System. out.println(rb.getObject("hello"));
+	```
+	import java.util.ListResourceBundle;
+	public class Labels_en_CA extends ListResourceBundle {
+		protected Object[][] getContents() {
+			return new Object[][] {
+				{ "hello", new StringBuilder("from Java") }
+			};
+		}
+	}
+	Locale locale = new Locale(args[0], "CA");
+	ResourceBundle rb = ResourceBundle.getBundle("Labels", locale);
+	System. out.println(rb.getObject("hello"));
+	```
 
 ##### Default Locale
 - To get and set the default locale:
-// store locale so can put it back at end
-Locale initial  = Locale.getDefault();
-System.out.println(initial);
-// set locale to Germany
-Locale.setDefault(Locale.GERMANY);
-System.out.println(Locale.getDefault());
-// put original locale back
-Locale.setDefault(initial);
-System.out.println(Locale.getDefault());
+	```
+	// store locale so can put it back at end
+	Locale initial  = Locale.getDefault();
+	System.out.println(initial);
+	// set locale to Germany
+	Locale.setDefault(Locale.GERMANY);
+	System.out.println(Locale.getDefault());
+	// put original locale back
+	Locale.setDefault(initial);
+	System.out.println(Locale.getDefault());
+	```
 
-
-ResourceBundle.getBundle(baseName)is just shorthand for ResourceBundle.getBundle(baseName, Locale.getDefault())
-
-Locale locale = new Locale("fr", "CA");
-ResourceBundle rb = ResourceBundle.getBundle("RB", locale);
-Java will look for the following files in the classpath in this order:
-RB_fr_CA.java // exactly what we asked for
-RB_fr_CA.properties
-
-RB_fr.java 				// couldn't find exactly what we asked for
-RB_fr.properties		// now trying just requested language
-RB_en_US.java 			// couldn't find French
-RB_en_US.properties	 	// now trying default Locale
-RB_en.java 				// couldn't find full default Locale country
-RB_en.properties 		// now trying default Locale language
-RB.java 				// couldn't find anything any matching Locale,
-RB.properties 			// now trying default bundle
-
-If none of these files exist, Java gives up and throws a MissingResourceException
- Start with the full Locale requested. Then fall back to just language. Then fall back to the default Locale. Then fall back to the default bundle.
-
- You don't have to specify all the keys in all the property files. They can inherit
-from each other.
-Properties can be inherited from parents, noncountry-specific bundles for example.
-  RB_en.properties
-                    ride.in=Take a ride in the
-                  RB_en_US.properties
-                    elevator=elevator
-                  RB_en_UK.properties
-                    elevator=lift
-Locale locale = new Locale("en", "UK");
-ResourceBundle rb = ResourceBundle.getBundle("RB", locale); System.out.println(rb.getString("ride.in") +
-                                     rb.getString("elevator"));
-
-A bundle's parent always has a shorter name than the child bundle.
-
-resource bundles allow you to move locale-specific information (usually strings) out of your code and into external files where they can easily be amended.
+- ResourceBundle.getBundle(baseName)is just shorthand for ResourceBundle.getBundle(baseName, Locale.getDefault())
+	```
+	Locale locale = new Locale("fr", "CA");
+	ResourceBundle rb = ResourceBundle.getBundle("RB", locale);
+	```
+- Start with the full Locale requested. Then fall back to just language. Then fall back to the default Locale. Then fall back to the default bundle. The following order will be followed:
+	```
+	RB_fr_CA.java // exactly what we asked for
+	RB_fr_CA.properties
+	RB_fr.java 				// couldn't find exactly what we asked for
+	RB_fr.properties		// now trying just requested language
+	RB_en_US.java 			// couldn't find French
+	RB_en_US.properties	 	// now trying default Locale
+	RB_en.java 				// couldn't find full default Locale country
+	RB_en.properties 		// now trying default Locale language
+	RB.java 				// couldn't find anything any matching Locale,
+	RB.properties 			// now trying default bundle
+	```
+- If none of these files exist, Java gives up and throws a MissingResourceException.
+- Properties can be inherited from parents, noncountry-specific bundles for example.
+	- RB_en.properties
+		- ride.in=Take a ride in the
+	- RB_en_US.properties
+		- elevator=elevator
+	- RB_en_UK.properties
+		- elevator=lift
+```
+	Locale locale = new Locale("en", "UK");
+	ResourceBundle rb = ResourceBundle.getBundle("RB", locale); System.out.println(rb.getString("ride.in") + rb.getString("elevator"));
+```
+- A bundle's parent always has a shorter name than the child bundle.
+- Resource bundles allow you to move locale-specific information (usually strings) out of your code and into external files where they can easily be amended.
