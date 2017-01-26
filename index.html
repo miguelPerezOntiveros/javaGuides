@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -163,7 +163,7 @@
 	<script>
 		window.inTriggerZone = false;
 		window.triggerZoneThresh = 100;
-		document.onmousemove = (event) => {
+		document.onmousemove = function(event) {
 			if(event.pageY < triggerZoneThresh && !inTriggerZone)
 			{
 				$("#hoverable").animate({marginTop: '-' + $("#hoverable").height() +'px'});
@@ -179,7 +179,7 @@
 
 		$("#hoverable").css({marginTop: '-' + $("#hoverable").height()*2 +'px'});
     	
-		document.onkeydown = (e) => {
+		document.onkeydown = function(e) {
 			switch(e.keyCode)
 			{
 				case 38: break;// up					
@@ -205,7 +205,7 @@
 		}
 
 		for(let i = 0; i < 20; i++)
-			$('#menu' + i).click( () => fillContent(currentPage = i) );
+			$('#menu' + i).click( function() { fillContent(currentPage = i)} );
 
 		var currentPage = 1;
 		fillContent(currentPage);
@@ -223,7 +223,7 @@
 				return;
 			}
 
-			$('#top').children().each( (i, e) => { $(e).removeClass('active'); } );
+			$('#top').children().each( function(i, e) { $(e).removeClass('active'); } );
 			$('#menu'+currentPage).parent().addClass('active'); 
 
 			new Promise(function(resolve){
@@ -237,7 +237,7 @@
 		function afterLoading(id){
 				$('#sidebar').html('');
 				var h3cnt = 0;
-				$('#'+id).find('h1, h3, h6').each( (num, entry)=>{ 
+				$('#'+id).find('h1, h3, h6').each( function(num, entry) { 
 					if( $(entry).is('h3') ||  $(entry).is('h1') )
 						$('#sidebar').append('<li><a href="#' + id + num +'">' + $(entry).html() +'</a><ul class="nav nav-stacked" id="' + id + (++h3cnt) + '_sub_ul"></ul></li>'); 
 					else
